@@ -437,9 +437,16 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
 
     contact: () => `DIRECT CONTACT CHANNELS:
   • Email   : atheeb1311@gmail.com
-  • Phone   : +94 77 941 3135 (WhatsApp available)
+  • WhatsApp: https://wa.me/94779413135 (+94 77 941 3135)
   • GitHub  : https://github.com/atheeb11
-  • Location: Sukabumi, Indonesia`,
+  • Location: Sukabumi, Indonesia (Origin: Sri Lanka)`,
+
+    whatsapp: () => {
+      window.open('https://wa.me/94779413135?text=Hi%20Mubarak%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect!', '_blank');
+      return 'Opening direct WhatsApp chat with Mubarak Atheeb (+94 77 941 3135)...';
+    },
+
+    wa: () => terminalCommands.whatsapp(),
 
     hire: () => {
       document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
