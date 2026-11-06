@@ -441,6 +441,14 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
       return `[MATRIX PROTOCOL INITIALIZED] Fullscreen digital stream active. Press ESC or click Exit to return.`;
     },
 
+    voice: () => {
+      startVoiceIntro();
+      return `[VOICE SYNTHESIS ACTIVATED] Playing Mubarak's personal voice introduction...`;
+    },
+
+    speak: () => terminalCommands.voice(),
+    intro: () => terminalCommands.voice(),
+
     inbox: async () => {
       try {
         const res = await fetch('/api/messages');
@@ -830,5 +838,151 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
       stopMatrixRain();
     }
   });
+
+  // ================= 14. INTERACTIVE VOICE OVER INTRODUCTION =================
+  const voiceIntroText = "Welcome to My Profile! I'm Mubarak Atheeb, an Informatics Engineering student at Nusa Putra University, Indonesia. I serve as an AWS Student Builder Community Leader, One World Youth Movement Ambassador, and International Diplomats Ambassador. I'm passionate about technology, artificial intelligence, software development, youth leadership, and global collaboration. I enjoy exploring innovative ideas, leading communities, connecting with people worldwide, and creating positive change through technology and leadership. Let's connect, collaborate, and build a better future together!";
+
+  const sentences = [
+    "👋 Welcome to My Profile!",
+    "🎓 I'm Mubarak Atheeb, Informatics Engineering at Nusa Putra University, Indonesia.",
+    "🌐 AWS Student Builder Community Leader & One World Youth Movement Ambassador.",
+    "🤝 International Diplomats Ambassador advocating global collaboration.",
+    "💡 Passionate about technology, AI, software development & leadership.",
+    "🚀 Let's connect, collaborate, and build a better future together!"
+  ];
+
+  const voiceHud = document.getElementById('voiceover-hud');
+  const voicePlayBtn = document.getElementById('voice-play-btn');
+  const voicePlayIcon = document.getElementById('voice-play-icon');
+  const voiceSnippet = document.getElementById('voice-transcript-snippet');
+  const voiceDismissBtn = document.getElementById('voice-dismiss-btn');
+  const voiceToggleBtn = document.getElementById('voiceover-toggle-btn');
+  const heroVoiceBtn = document.getElementById('hero-voice-btn');
+  const voiceCard = document.querySelector('.voiceover-card');
+
+  let currentUtterance = null;
+  let isSpeaking = false;
+  let sentenceTimer = null;
+  let currentSentenceIdx = 0;
+
+  function getBestEnglishVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')) && v.lang.startsWith('en'));
+    return preferred || voices.find(v => v.lang.startsWith('en')) || voices[0];
+  }
+
+  function startVoiceIntro() {
+    if (!('speechSynthesis' in window)) {
+      showToast('Speech synthesis not supported in this browser.');
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    clearInterval(sentenceTimer);
+
+    if (voiceHud) voiceHud.classList.remove('hidden');
+
+    currentUtterance = new SpeechSynthesisUtterance(voiceIntroText);
+    const selectedVoice = getBestEnglishVoice();
+    if (selectedVoice) currentUtterance.voice = selectedVoice;
+    currentUtterance.rate = 0.96;
+    currentUtterance.pitch = 1.0;
+
+    currentSentenceIdx = 0;
+    if (voiceSnippet) {
+      voiceSnippet.textContent = sentences[0];
+      voiceSnippet.style.transition = 'opacity 0.2s ease';
+    }
+
+    currentUtterance.onstart = () => {
+      isSpeaking = true;
+      if (voiceCard) voiceCard.classList.add('speaking');
+      if (voicePlayIcon) {
+        voicePlayIcon.className = 'fa-solid fa-pause text-lg';
+      }
+      playTone(587.33, 'sine', 0.1, 0.1);
+
+      sentenceTimer = setInterval(() => {
+        currentSentenceIdx++;
+        if (currentSentenceIdx < sentences.length) {
+          if (voiceSnippet) {
+            voiceSnippet.style.opacity = '0';
+            setTimeout(() => {
+              voiceSnippet.textContent = sentences[currentSentenceIdx];
+              voiceSnippet.style.opacity = '1';
+            }, 200);
+          }
+        }
+      }, 5200);
+    };
+
+    currentUtterance.onend = () => {
+      stopVoiceIntroUI();
+      if (voiceSnippet) voiceSnippet.textContent = 'Completed! Click to replay intro.';
+    };
+
+    currentUtterance.onerror = (e) => {
+      console.warn('Speech error:', e);
+      stopVoiceIntroUI();
+    };
+
+    window.speechSynthesis.speak(currentUtterance);
+  }
+
+  function stopVoiceIntroUI() {
+    isSpeaking = false;
+    clearInterval(sentenceTimer);
+    if (voiceCard) voiceCard.classList.remove('speaking');
+    if (voicePlayIcon) {
+      voicePlayIcon.className = 'fa-solid fa-play text-lg';
+    }
+  }
+
+  function toggleVoiceIntro() {
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      stopVoiceIntroUI();
+      if (voiceSnippet) voiceSnippet.textContent = 'Paused. Click to restart intro.';
+    } else {
+      startVoiceIntro();
+    }
+  }
+
+  if (voicePlayBtn) voicePlayBtn.addEventListener('click', toggleVoiceIntro);
+  if (voiceToggleBtn) voiceToggleBtn.addEventListener('click', () => {
+    toggleVoiceIntro();
+    if (voiceHud) voiceHud.classList.remove('hidden');
+  });
+  if (heroVoiceBtn) heroVoiceBtn.addEventListener('click', () => {
+    startVoiceIntro();
+    if (voiceHud) voiceHud.classList.remove('hidden');
+  });
+
+  if (voiceDismissBtn) {
+    voiceDismissBtn.addEventListener('click', () => {
+      window.speechSynthesis.cancel();
+      stopVoiceIntroUI();
+      if (voiceHud) voiceHud.classList.add('hidden');
+    });
+  }
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = () => {
+      getBestEnglishVoice();
+    };
+  }
+
+  // Trigger on first click anywhere on the page to comply with browser autoplay policy
+  let hasAutoSpoken = false;
+  function triggerFirstInteractionVoice(e) {
+    if (!hasAutoSpoken) {
+      // Don't auto-speak if user clicked dismiss
+      if (e.target.closest('#voice-dismiss-btn')) return;
+      hasAutoSpoken = true;
+      startVoiceIntro();
+    }
+  }
+  window.addEventListener('click', triggerFirstInteractionVoice, { once: true });
 
 });

@@ -51,6 +51,10 @@
 
   <!-- Audio Control & Theme Floaters -->
   <div class="quick-controls fixed top-24 right-6 z-50 flex flex-col gap-3">
+    <button id="voiceover-toggle-btn" class="control-btn voice-control-btn" title="Listen to Voice Introduction by Mubarak" aria-label="Play Voice Intro">
+      <i class="fa-solid fa-microphone-lines text-cyan-400"></i>
+      <span class="btn-tooltip">Voice Intro</span>
+    </button>
     <button id="sound-toggle" class="control-btn" title="Toggle Cyber Audio FX" aria-label="Toggle Sound">
       <i class="fa-solid fa-volume-xmark"></i>
       <span class="btn-tooltip">Sound FX</span>
@@ -163,6 +167,10 @@
             <button id="open-resume-btn" class="btn-outline">
               <i class="fa-solid fa-file-pdf text-rose-400 mr-2"></i>
               <span>View CV / Resume</span>
+            </button>
+            <button id="hero-voice-btn" class="btn-outline border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/10">
+              <i class="fa-solid fa-volume-high text-cyan-400 mr-2"></i>
+              <span>Listen to Intro</span>
             </button>
             <a href="#contact" class="btn-outline">
               <i class="fa-regular fa-paper-plane mr-2"></i>
@@ -827,9 +835,6 @@
       </div>
     </section>
 
-      </div>
-    </section>
-
     <!-- ================= EXPERIENCE & TIMELINE ================= -->
     <section id="experience" class="section-wrapper py-24 px-6 bg-slate-950/40">
       <div class="max-w-7xl mx-auto">
@@ -1197,6 +1202,33 @@
               </div>
             </div>
 
+            <!-- Academic & Professional Reference Card -->
+            <div class="glass-panel p-6 rounded-2xl border border-cyan-500/20">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg border border-cyan-500/20">
+                    <i class="fa-solid fa-user-check"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-base font-bold text-white">Mohamed Ali Fathima Nusha</h4>
+                    <span class="text-xs text-cyan-400 font-mono">Lecturer • KMKM Imam Gazzaly Maha Vidyalaya</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-emerald-400 border-emerald-500/30">Verified Reference</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                Official academic referee attesting to leadership as Senior Prefect, School Web Designing Team Leader, and high distinction in informatics.
+              </p>
+              <div class="mt-4 pt-3 border-t border-slate-800 flex flex-wrap gap-4 text-xs font-mono text-slate-400">
+                <a href="tel:+94741612345" class="hover:text-cyan-400 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-phone text-emerald-400"></i> +94 74 161 2345
+                </a>
+                <a href="mailto:nushamohamedali@gmail.com" class="hover:text-cyan-400 transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-envelope text-cyan-400"></i> nushamohamedali@gmail.com
+                </a>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -1549,6 +1581,44 @@
     <button id="close-matrix-btn" class="absolute top-6 right-6 z-50 px-4 py-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-lg font-mono text-sm hover:bg-emerald-500/30 transition">
       <i class="fa-solid fa-arrow-left mr-2"></i>Exit Matrix
     </button>
+  </div>
+
+  <!-- ================= FLOATING AI VOICEOVER & TELEPROMPTER HUD ================= -->
+  <div id="voiceover-hud" class="fixed bottom-6 left-6 z-50 max-w-lg w-[calc(100%-3rem)] sm:w-auto transition-all duration-300">
+    <div class="voiceover-card flex items-center gap-3.5 p-3.5 sm:px-4 rounded-2xl glass-panel border border-cyan-500/40 shadow-2xl backdrop-blur-xl">
+      <!-- Play/Pause Control Button -->
+      <button id="voice-play-btn" class="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/30 hover:scale-105 active:scale-95 transition cursor-pointer" aria-label="Toggle Voice Introduction">
+        <i class="fa-solid fa-play text-lg" id="voice-play-icon"></i>
+      </button>
+
+      <!-- Text & Audio Wave Monitor -->
+      <div class="flex-1 min-w-0 pr-1">
+        <div class="flex items-center justify-between gap-2 mb-0.5">
+          <div class="flex items-center gap-2 truncate">
+            <span class="text-xs font-bold text-white tracking-wide">Mubarak's Voiceover</span>
+            <span class="voice-badge">AI Narrator</span>
+          </div>
+          <!-- Equalizer Audio Waveform -->
+          <div class="voice-waves flex items-end gap-1 h-3.5" id="voice-waves">
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+          </div>
+        </div>
+
+        <!-- Teleprompter / Transcript Live Stream -->
+        <p class="text-[11px] text-cyan-300/95 font-mono truncate" id="voice-transcript-snippet">
+          "👋 Welcome to My Profile! I'm Mubarak Atheeb..."
+        </p>
+      </div>
+
+      <!-- Dismiss Button -->
+      <button id="voice-dismiss-btn" class="text-slate-400 hover:text-white text-xs p-1.5 rounded-lg hover:bg-slate-800 transition" title="Dismiss Voiceover Bar" aria-label="Dismiss Voice Widget">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
   </div>
 
   <!-- Toast Notification Container -->

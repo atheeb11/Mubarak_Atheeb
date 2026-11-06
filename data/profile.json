@@ -124,8 +124,10 @@
     { "title": "GCE Ordinary Level (O/L)", "issuer": "Department of Examinations", "year": "2021", "badge": "Academic" }
   ],
   "leadership": [
+    { "title": "AWS Student Builder Community Leader", "org": "AWS", "desc": "Leading cloud and architectural initiatives for student builders." },
+    { "title": "One World Youth Movement Ambassador", "org": "One World Youth Movement", "desc": "Representing international youth leadership, empowerment, and global dialogue." },
+    { "title": "International Diplomats Ambassador", "org": "International Diplomats", "desc": "Advocating for international collaboration, youth diplomacy, and technological innovation." },
     { "title": "Founder & Lead", "org": "InkBit Digital Studio", "desc": "Leading web design and brand engineering projects." },
-    { "title": "Global Youth Ambassador", "org": "One World Youth Movements", "desc": "Representing international youth initiatives and leadership." },
     { "title": "Scholarship Awardee", "org": "Universitas Nusa Putra", "desc": "Recognized for academic merit and potential in Informatics Engineering." },
     { "title": "Senior Prefect", "org": "KMKM Imam Gazzaly Maha Vidyalaya", "desc": "Demonstrated discipline, school leadership, and student administration." },
     { "title": "School Web Designing Team Leader", "org": "KMKM Imam Gazzaly Maha Vidyalaya", "desc": "Spearheaded digital solutions, portals, and media for school events." },
