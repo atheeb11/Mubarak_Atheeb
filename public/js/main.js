@@ -863,76 +863,123 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
   const voiceIntroText = "Welcome to My Profile! I'm Mubarak Atheeb, an Informatics Engineering student at Nusa Putra University, Indonesia. I serve as an AWS Student Builder Community Leader, One World Youth Movement Ambassador, and International Diplomats Ambassador. I'm passionate about technology, artificial intelligence, software development, youth leadership, and global collaboration. I enjoy exploring innovative ideas, leading communities, connecting with people worldwide, and creating positive change through technology and leadership. Let's connect, collaborate, and build a better future together!";
 
   const voiceToggleBtn = document.getElementById('voiceover-toggle-btn');
-  let currentUtterance = null;
+  const profileAudio = document.getElementById('profile-audio');
   let isSpeaking = false;
   let hasStartedVoice = false;
+  let currentUtterance = null;
+  let speechKeepAliveTimer = null;
+
+  function updateVoiceUI(speaking) {
+    isSpeaking = speaking;
+    if (voiceToggleBtn) {
+      if (speaking) {
+        voiceToggleBtn.classList.add('speaking');
+        voiceToggleBtn.title = 'Pause Voice Introduction';
+      } else {
+        voiceToggleBtn.classList.remove('speaking');
+        voiceToggleBtn.title = 'Play Voice Introduction';
+      }
+    }
+  }
 
   function getBestEnglishVoice() {
     if (!('speechSynthesis' in window)) return null;
     const voices = window.speechSynthesis.getVoices();
     const preferred = voices.find(v => 
-      (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('David')) && 
+      (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('David') || v.name.includes('Zira')) && 
       v.lang.startsWith('en')
     );
     return preferred || voices.find(v => v.lang.startsWith('en')) || voices[0];
   }
 
-  function startVoiceIntro() {
-    if (!('speechSynthesis' in window)) return;
-    if (isSpeaking) return;
+  async function startVoiceIntro(forceRestart = false) {
+    if (isSpeaking && !forceRestart) return true;
 
-    window.speechSynthesis.cancel();
+    stopVoiceIntro(false);
 
-    currentUtterance = new SpeechSynthesisUtterance(voiceIntroText);
-    const selectedVoice = getBestEnglishVoice();
-    if (selectedVoice) currentUtterance.voice = selectedVoice;
-    currentUtterance.rate = 0.98;
-    currentUtterance.pitch = 1.0;
-
-    currentUtterance.onstart = () => {
-      isSpeaking = true;
-      hasStartedVoice = true;
-      if (voiceToggleBtn) {
-        voiceToggleBtn.classList.add('speaking');
-        voiceToggleBtn.title = 'Pause Voice Introduction';
+    // 1. Try HTML5 Audio First (Fastest, highest fidelity, fully cross-platform)
+    if (profileAudio) {
+      try {
+        profileAudio.currentTime = 0;
+        const playPromise = profileAudio.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          hasStartedVoice = true;
+          updateVoiceUI(true);
+          return true;
+        }
+      } catch (audioErr) {
+        // Fall back to Web Speech API
       }
-    };
+    }
 
-    currentUtterance.onend = () => {
-      isSpeaking = false;
-      if (voiceToggleBtn) {
-        voiceToggleBtn.classList.remove('speaking');
-        voiceToggleBtn.title = 'Replay Voice Introduction';
+    // 2. Fallback to Browser Speech Synthesis API
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+
+        currentUtterance = new SpeechSynthesisUtterance(voiceIntroText);
+        const selectedVoice = getBestEnglishVoice();
+        if (selectedVoice) currentUtterance.voice = selectedVoice;
+        currentUtterance.rate = 0.98;
+        currentUtterance.pitch = 1.0;
+
+        currentUtterance.onstart = () => {
+          hasStartedVoice = true;
+          updateVoiceUI(true);
+          // Keep-alive timer for Chrome speech synthesis 15-second pause bug
+          clearInterval(speechKeepAliveTimer);
+          speechKeepAliveTimer = setInterval(() => {
+            if (isSpeaking && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
+              window.speechSynthesis.resume();
+            } else {
+              clearInterval(speechKeepAliveTimer);
+            }
+          }, 300);
+        };
+
+        currentUtterance.onend = () => {
+          clearInterval(speechKeepAliveTimer);
+          updateVoiceUI(false);
+        };
+
+        currentUtterance.onerror = () => {
+          clearInterval(speechKeepAliveTimer);
+          updateVoiceUI(false);
+        };
+
+        window.speechSynthesis.speak(currentUtterance);
+        window.speechSynthesis.resume();
+        return true;
+      } catch (ttsErr) {
+        // TTS failed
       }
-    };
+    }
 
-    currentUtterance.onerror = (e) => {
-      // If blocked by browser autoplay policy, it will resume on first gesture
-      isSpeaking = false;
-      if (voiceToggleBtn) voiceToggleBtn.classList.remove('speaking');
-    };
-
-    window.speechSynthesis.speak(currentUtterance);
+    return false;
   }
 
-  function stopVoiceIntro() {
+  function stopVoiceIntro(notify = false) {
+    if (profileAudio && !profileAudio.paused) {
+      profileAudio.pause();
+      profileAudio.currentTime = 0;
+    }
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
-    isSpeaking = false;
-    if (voiceToggleBtn) {
-      voiceToggleBtn.classList.remove('speaking');
-      voiceToggleBtn.title = 'Play Voice Introduction';
-    }
+    clearInterval(speechKeepAliveTimer);
+    updateVoiceUI(false);
+    if (notify) showToast('Voice intro paused ⏸️');
   }
 
   function toggleVoiceIntro() {
     if (isSpeaking) {
-      stopVoiceIntro();
-      showToast('Voice intro paused ⏸️');
+      stopVoiceIntro(true);
     } else {
-      startVoiceIntro();
-      showToast('Playing Mubarak\'s voice intro 🎙️');
+      startVoiceIntro(true).then(ok => {
+        if (ok) showToast('Playing Mubarak\'s voice intro 🎙️');
+      });
     }
   }
 
@@ -940,41 +987,68 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     voiceToggleBtn.addEventListener('click', toggleVoiceIntro);
   }
 
+  if (profileAudio) {
+    profileAudio.addEventListener('ended', () => updateVoiceUI(false));
+    profileAudio.addEventListener('pause', () => {
+      if (!window.speechSynthesis?.speaking) updateVoiceUI(false);
+    });
+  }
+
   // Pre-load voices for Chrome / Chromium
   if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = () => {
       getBestEnglishVoice();
       if (!hasStartedVoice) {
-        tryAutoPlay();
+        attemptAutoPlay();
       }
     };
   }
 
-  // Automatic Play on Open or Refresh
-  function tryAutoPlay() {
+  // Dual-tier Autoplay Engine:
+  // Tier 1: Try immediately on open / refresh
+  function attemptAutoPlay() {
     if (hasStartedVoice) return;
-    try {
-      startVoiceIntro();
-    } catch (e) {
-      // Ignored if browser blocks synchronous autoplay
-    }
+    startVoiceIntro().then(started => {
+      if (started) {
+        hasStartedVoice = true;
+        detachGestureListeners();
+      }
+    }).catch(() => {});
   }
 
-  // 1. Attempt immediately upon DOM ready
-  setTimeout(tryAutoPlay, 500);
-
-  // 2. Fallback gesture triggers (mouse movement, scroll, touch, or click)
-  // Guarantees speech starts the millisecond a visitor enters or moves on the page
-  const autoPlayTriggers = ['mousemove', 'scroll', 'touchstart', 'click', 'keydown'];
-  function onFirstUserPresence() {
+  // Tier 2: Instant trigger on first user activation if browser requires gesture
+  const userActivationEvents = ['pointerdown', 'click', 'touchstart', 'keydown'];
+  function onFirstUserActivation() {
     if (!hasStartedVoice) {
-      startVoiceIntro();
+      startVoiceIntro().then(started => {
+        if (started) {
+          hasStartedVoice = true;
+          detachGestureListeners();
+        }
+      });
+    } else {
+      detachGestureListeners();
     }
-    autoPlayTriggers.forEach(evt => window.removeEventListener(evt, onFirstUserPresence));
   }
 
-  autoPlayTriggers.forEach(evt => {
-    window.addEventListener(evt, onFirstUserPresence, { passive: true, once: true });
+  function detachGestureListeners() {
+    userActivationEvents.forEach(evt => {
+      window.removeEventListener(evt, onFirstUserActivation, { capture: true });
+      document.removeEventListener(evt, onFirstUserActivation, { capture: true });
+    });
+  }
+
+  userActivationEvents.forEach(evt => {
+    window.addEventListener(evt, onFirstUserActivation, { capture: true, passive: true });
+    document.addEventListener(evt, onFirstUserActivation, { capture: true, passive: true });
   });
+
+  // Attempt right away at multiple stages of document readiness
+  attemptAutoPlay();
+  if (document.readyState === 'complete') {
+    setTimeout(attemptAutoPlay, 200);
+  } else {
+    window.addEventListener('load', () => setTimeout(attemptAutoPlay, 200));
+  }
 
 });

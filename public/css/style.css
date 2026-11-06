@@ -1196,31 +1196,70 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .character-3d-stage {
-    height: 420px;
+    height: 440px;
   }
   .character-cutout-img {
-    height: 390px;
+    height: 400px;
   }
   .holo-energy-aura {
-    width: 300px;
-    height: 340px;
+    width: 280px;
+    height: 320px;
   }
   .holo-pedestal-light {
-    width: 230px;
+    width: 220px;
+  }
+  .floating-badge {
+    padding: 6px 10px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+  .floating-badge .text-xs {
+    font-size: 11px;
+  }
+  .badge-top-left {
+    top: 2%;
+    left: -4%;
+  }
+  .badge-top-right {
+    top: 8%;
+    right: -4%;
+  }
+  .badge-mid-left {
+    top: 38%;
+    left: -6%;
+  }
+  .badge-mid-right {
+    top: 42%;
+    right: -6%;
+  }
+  .badge-bottom-left {
+    bottom: 8%;
+    left: -2%;
   }
   .badge-bottom-right {
     display: none;
   }
+  .holo-orbit-ring {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .badge-mid-left,
+  .badge-mid-right {
+    display: none;
+  }
   .badge-top-left {
-    top: 2%;
+    top: 1%;
     left: -2%;
   }
   .badge-top-right {
-    top: 10%;
+    top: 7%;
     right: -2%;
   }
-  .holo-orbit-ring {
-    display: none;
+  .badge-bottom-left {
+    bottom: 6%;
+    left: 0;
   }
 }
 
