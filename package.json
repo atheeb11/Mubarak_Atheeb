@@ -1,0 +1,26 @@
+{
+  "name": "mubarak-atheeb-3d-portfolio",
+  "version": "1.0.0",
+  "description": "Interactive 3D Portfolio of Mubarak Atheeb powered by Express.js and Three.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "threejs",
+    "3d",
+    "express",
+    "informatics-engineering",
+    "web-design",
+    "mubarak-atheeb"
+  ],
+  "author": "Mubarak Atheeb",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0"
+  }
+}

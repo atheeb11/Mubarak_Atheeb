@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mubarak Atheeb | 3D Interactive Portfolio & Informatics Engineer</title>
+  <meta name="description" content="Portfolio of Mubarak Atheeb — Informatics Engineering Student, Founder at InkBit Digital Studio, Full-Stack Developer, and AI Enthusiast.">
+  <link rel="icon" type="image/png" href="/images/mubarak-atheeb.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Devicon Official Brand Logos CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'neon-cyan': '#00f2fe',
+            'neon-blue': '#4facfe',
+            'neon-purple': '#9d4edd',
+            'neon-pink': '#f72585'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Three.js & GSAP via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-dark text-light antialiased selection-neon">
+
+  <!-- Background WebGL 3D Canvas -->
+  <div id="canvas-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- Audio Control & Theme Floaters -->
+  <div class="quick-controls fixed top-24 right-6 z-50 flex flex-col gap-3">
+    <button id="sound-toggle" class="control-btn" title="Toggle Cyber Audio FX" aria-label="Toggle Sound">
+      <i class="fa-solid fa-volume-xmark"></i>
+      <span class="btn-tooltip">Sound FX</span>
+    </button>
+    <button id="theme-toggle" class="control-btn" title="Toggle Atmosphere Mode" aria-label="Toggle Theme">
+      <i class="fa-solid fa-moon"></i>
+      <span class="btn-tooltip">Cyber / Obsidian</span>
+    </button>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="navbar-wrapper fixed top-0 left-0 w-full z-40 transition-all duration-300">
+    <div class="nav-container max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="brand-logo flex items-center gap-3 group">
+        <div class="logo-box">
+          <span class="logo-letters">MA</span>
+          <span class="logo-glow"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Mubarak<span class="text-neon-cyan">.Atheeb</span></span>
+          <span class="brand-sub">InkBit Digital</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 nav-links">
+        <a href="#about" class="nav-item">About</a>
+        <a href="#skills" class="nav-item">Skills</a>
+        <a href="#experience" class="nav-item">Experience</a>
+        <a href="#projects" class="nav-item">Projects</a>
+        <a href="#terminal" class="nav-item">Terminal</a>
+        <a href="#contact" class="nav-item">Contact</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="hidden md:flex items-center gap-4">
+        <a href="#contact" class="btn-neon-small">
+          <span>Hire Me</span>
+          <i class="fa-solid fa-arrow-right-long text-xs ml-2"></i>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-300 focus:outline-none" aria-label="Open Mobile Menu">
+        <i class="fa-solid fa-bars-staggered"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 px-6 py-6 transition-all">
+      <nav class="flex flex-col gap-4 text-center">
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#experience" class="mobile-nav-link">Experience</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#terminal" class="mobile-nav-link">Terminal</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+        <a href="#contact" class="btn-neon w-full mt-2">Hire Me</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Flow -->
+  <main class="relative z-10">
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="hero" class="hero-section min-h-screen flex items-center justify-center pt-28 pb-16 px-6">
+      <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Hero Column -->
+        <div class="lg:col-span-7 flex flex-col items-start gap-6 hero-text-wrapper">
+          
+          <!-- Status Pill -->
+          <div class="status-badge inline-flex items-center gap-2.5 px-4 py-2 rounded-full backdrop-blur-md">
+            <span class="pulse-indicator"></span>
+            <span class="status-text">Available for Opportunities & Projects</span>
+            <span class="express-badge"><i class="fa-brands fa-node-js text-emerald-400 mr-1"></i>Express Backend</span>
+          </div>
+
+          <!-- Main Greeting & Heading -->
+          <h1 class="hero-title text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+            Engineering Code,<br>
+            Designing Future with<br>
+            <span class="gradient-text glitch-text" data-text="Mubarak Atheeb">Mubarak Atheeb</span>
+          </h1>
+
+          <!-- Dynamic Role Subtitle -->
+          <div class="role-box flex items-center gap-2 text-xl sm:text-2xl font-mono text-slate-300">
+            <span class="text-neon-cyan">&gt;</span>
+            <span id="typewriter-text" class="typewriter text-neon-cyan"></span>
+            <span class="cursor-blink">|</span>
+          </div>
+
+          <!-- Summary Paragraph -->
+          <p class="hero-desc text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+            Informatics Engineering student at <strong class="text-white">Universitas Nusa Putra</strong> (Indonesia) and Founder at <strong class="text-neon-cyan">InkBit Digital Studio</strong>. Crafting responsive web architectures, Python-driven intelligence, and resilient systems.
+          </p>
+
+          <!-- Call to Action Buttons -->
+          <div class="hero-actions flex flex-wrap items-center gap-4 pt-2">
+            <a href="#projects" class="btn-primary">
+              <i class="fa-solid fa-layer-group mr-2"></i>
+              <span>Explore Projects</span>
+            </a>
+            <a href="#terminal" class="btn-secondary">
+              <i class="fa-solid fa-terminal mr-2"></i>
+              <span>3D Terminal</span>
+            </a>
+            <button id="open-resume-btn" class="btn-outline">
+              <i class="fa-solid fa-file-pdf text-rose-400 mr-2"></i>
+              <span>View CV / Resume</span>
+            </button>
+            <a href="#contact" class="btn-outline">
+              <i class="fa-regular fa-paper-plane mr-2"></i>
+              <span>Get in Touch</span>
+            </a>
+          </div>
+
+          <!-- Social Quick Links -->
+          <div class="social-bar flex items-center gap-5 pt-4 text-slate-400">
+            <span class="text-xs uppercase tracking-widest font-mono text-slate-500">Connect:</span>
+            <a href="https://github.com/atheeb11" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub Profile">
+              <i class="fa-brands fa-github text-xl"></i>
+            </a>
+            <a href="mailto:atheeb1311@gmail.com" class="social-icon" title="Send Email">
+              <i class="fa-solid fa-envelope text-xl"></i>
+            </a>
+            <a href="tel:+94779413135" class="social-icon" title="Call or WhatsApp">
+              <i class="fa-solid fa-phone text-xl"></i>
+            </a>
+            <span class="text-xs font-mono text-slate-400 ml-2">
+              <i class="fa-solid fa-location-dot text-rose-400 mr-1"></i>Sukabumi, Indonesia
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Right Hero Column: Free-Standing 3D Cutout Portrait (No Background Card) -->
+        <div class="lg:col-span-5 flex justify-center items-center relative hero-portrait-area">
+          <div class="character-3d-stage" id="hero-character-wrapper">
+            
+            <!-- Atmospheric Holographic Aura & Backlight -->
+            <div class="holo-energy-aura"></div>
+            <div class="holo-orbit-ring ring-1"></div>
+            <div class="holo-orbit-ring ring-2"></div>
+
+            <!-- Floating Cyber Badges in 3D Space -->
+            <div class="floating-badge badge-top-left" data-depth="0.3">
+              <i class="fa-solid fa-bolt text-amber-400"></i>
+              <div>
+                <div class="text-[10px] uppercase text-slate-400 font-mono">Role</div>
+                <div class="text-xs font-bold text-white">Founder @ InkBit</div>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-top-right" data-depth="0.25">
+              <i class="fa-solid fa-graduation-cap text-sky-400"></i>
+              <div>
+                <div class="text-[10px] uppercase text-slate-400 font-mono">University</div>
+                <div class="text-xs font-bold text-white">Nusa Putra B.Eng</div>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-bottom-right" data-depth="0.35">
+              <i class="fa-solid fa-brain text-purple-400"></i>
+              <div>
+                <div class="text-[10px] uppercase text-slate-400 font-mono">Specialty</div>
+                <div class="text-xs font-bold text-white">AI / ML Diplomas</div>
+              </div>
+            </div>
+
+            <!-- Free-standing Cutout Image with Parallax & Glow -->
+            <div class="character-image-container" id="character-cutout">
+              <img src="/images/mubarak-atheeb.png" alt="Mubarak Atheeb - Informatics Engineering Student" class="character-cutout-img" id="avatar-image">
+              <!-- Holographic Pedestal at Feet -->
+              <div class="holo-pedestal-light"></div>
+            </div>
+
+            <!-- Floating Identity Capsule -->
+            <div class="floating-identity-capsule">
+              <span class="hologram-pulse"></span>
+              <span class="font-bold text-white text-xs">Mubarak Atheeb</span>
+              <span class="text-[11px] text-cyan-400 font-mono">• ID: 20250040223</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= METRICS & STATS BANNER ================= -->
+    <section class="stats-banner py-8 border-y border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="stat-item" data-target="20">
+          <div class="stat-number"><span class="counter" data-count="20">0</span><span class="text-neon-cyan">+</span></div>
+          <div class="stat-label">Projects & Solutions</div>
+        </div>
+        <div class="stat-item" data-target="4">
+          <div class="stat-number"><span class="counter" data-count="4">0</span><span class="text-neon-pink">+</span></div>
+          <div class="stat-label">Years Systems Experience</div>
+        </div>
+        <div class="stat-item" data-target="7">
+          <div class="stat-number"><span class="counter" data-count="7">0</span><span class="text-neon-purple">+</span></div>
+          <div class="stat-label">Diplomas & Certifications</div>
+        </div>
+        <div class="stat-item" data-target="100">
+          <div class="stat-number"><span class="counter" data-count="100">0</span><span class="text-emerald-400">%</span></div>
+          <div class="stat-label">Client & Academic Dedication</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT SECTION ================= -->
+    <section id="about" class="section-wrapper py-24 px-6">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="section-tag">
+            <i class="fa-solid fa-fingerprint text-neon-cyan mr-2"></i>DISCOVER THE PROFILE
+          </div>
+          <h2 class="section-heading">Architecting Tech Across Borders</h2>
+          <p class="section-subheading">
+            From hardware troubleshooting in Sri Lanka to Informatics Engineering in Indonesia, merging technical precision with creative digital design.
+          </p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+          
+          <!-- Left Bio Box -->
+          <div class="lg:col-span-7 glass-panel p-8 sm:p-10 flex flex-col justify-between">
+            <div class="space-y-5 text-slate-300 leading-relaxed text-base">
+              <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+                <span>Who is Mubarak Atheeb?</span>
+                <span class="h-1 flex-1 bg-gradient-to-r from-neon-cyan/50 to-transparent rounded"></span>
+              </h3>
+              
+              <p>
+                I am a first-year <strong>Informatics Engineering</strong> undergraduate at <strong>Universitas Nusa Putra</strong> in Sukabumi, Indonesia (Student ID: 20250040223), and the Founder &amp; Web Designer at <strong>InkBit Digital Studio</strong>.
+              </p>
+              
+              <p>
+                My journey bridges the entire computing spectrum: from deep hardware troubleshooting and data recovery as a computer technician in Sri Lanka, to modern full-stack web engineering, Python-driven automation, and Machine Learning models certified by NOVI/TECH.
+              </p>
+
+              <p>
+                As a former <strong>Senior Prefect</strong>, <strong>Global Youth Ambassador</strong> for One World Youth Movements, and Social Media Manager at Harvest International Business College, I bring demonstrated discipline, international perspective, and team leadership to every digital venture.
+              </p>
+            </div>
+
+            <!-- Key Info Quick Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8 mt-6 border-t border-slate-800">
+              <div class="info-block">
+                <span class="info-title">Location</span>
+                <span class="info-val">Sukabumi, ID</span>
+              </div>
+              <div class="info-block">
+                <span class="info-title">Origin</span>
+                <span class="info-val">Sri Lanka</span>
+              </div>
+              <div class="info-block">
+                <span class="info-title">Degree</span>
+                <span class="info-val">B.Eng Informatics</span>
+              </div>
+              <div class="info-block">
+                <span class="info-title">Studio</span>
+                <span class="info-val">InkBit Digital</span>
+              </div>
+              <div class="info-block">
+                <span class="info-title">Backend</span>
+                <span class="info-val text-emerald-400 font-mono">Express.js</span>
+              </div>
+              <div class="info-block">
+                <span class="info-title">Availability</span>
+                <span class="info-val text-neon-cyan">Open to Hire</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Pillars Box: 4 Core Competencies -->
+          <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="pillar-card group">
+              <div class="pillar-icon bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <h4 class="pillar-title">Web Engineering</h4>
+              <p class="pillar-desc">Responsive, performant web apps utilizing HTML5, CSS3, modern JavaScript, and Express.js APIs.</p>
+            </div>
+
+            <div class="pillar-card group">
+              <div class="pillar-icon bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <h4 class="pillar-title">AI &amp; Data Analytics</h4>
+              <p class="pillar-desc">Certified Machine Learning, predictive models in Python, and automated PDF analytics pipelines.</p>
+            </div>
+
+            <div class="pillar-card group">
+              <div class="pillar-icon bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <h4 class="pillar-title">Systems &amp; Hardware</h4>
+              <p class="pillar-desc">3+ years diagnosing computer hardware, OS installations, motherboard chipsets, and data recovery.</p>
+            </div>
+
+            <div class="pillar-card group">
+              <div class="pillar-icon bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+              <h4 class="pillar-title">Brand &amp; UI/UX</h4>
+              <p class="pillar-desc">Founder of InkBit Digital Studio, delivering corporate branding, UI prototyping, and audience strategy.</p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 3D INTERACTIVE TERMINAL ================= -->
+    <section id="terminal" class="section-wrapper py-20 px-6">
+      <div class="max-w-5xl mx-auto">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <div class="section-tag font-mono">
+            <i class="fa-solid fa-terminal text-neon-cyan mr-2"></i>INTERACTIVE CLI
+          </div>
+          <h2 class="section-heading">Developer Console</h2>
+          <p class="section-subheading">
+            Interact directly with Mubarak Atheeb's portfolio environment using authentic command line commands.
+          </p>
+        </div>
+
+        <!-- Terminal Window Card -->
+        <div class="terminal-window">
+          
+          <!-- Terminal Titlebar -->
+          <div class="terminal-header flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+            </div>
+            <div class="terminal-title text-xs font-mono text-slate-400 flex items-center gap-2">
+              <i class="fa-solid fa-server text-cyan-400"></i>
+              <span>guest@atheeb-core: ~ (Express.js v5.3)</span>
+            </div>
+            <div class="text-xs font-mono text-slate-500 hidden sm:block">bash / node</div>
+          </div>
+
+          <!-- Terminal Body & Scroll Area -->
+          <div class="terminal-body p-6 font-mono text-sm leading-relaxed" id="terminal-output">
+            <div class="text-slate-400 mb-3">
+              <span class="text-emerald-400 font-bold">Mubarak Atheeb OS [Version 2026.11]</span><br>
+              Type <span class="text-neon-cyan font-bold">help</span> to view available commands, or try <span class="text-neon-purple font-bold">about</span>, <span class="text-neon-cyan font-bold">skills</span>, <span class="text-neon-pink font-bold">projects</span>, or <span class="text-emerald-400 font-bold">hire</span>.
+            </div>
+          </div>
+
+          <!-- Terminal Input Row -->
+          <div class="terminal-input-bar px-6 py-4 bg-slate-950/80 border-t border-slate-800 flex items-center gap-3">
+            <span class="text-neon-cyan font-mono font-bold">&gt;</span>
+            <input type="text" id="terminal-input" class="w-full bg-transparent font-mono text-white text-sm focus:outline-none placeholder-slate-600" placeholder="Type a command (e.g. help, skills, contact)..." autocomplete="off" spellcheck="false">
+            <button id="terminal-exec-btn" class="text-xs font-mono px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 transition">RUN</button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SKILLS SECTION WITH 3D LOGO ANIMATIONS ================= -->
+    <section id="skills" class="section-wrapper py-24 px-6 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="section-tag">
+            <i class="fa-solid fa-layer-group text-neon-cyan mr-2"></i>INTERACTIVE TECH MATRIX
+          </div>
+          <h2 class="section-heading">Mastered Skills &amp; Brand Ecosystem</h2>
+          <p class="section-subheading">
+            Interactive, 3D animated showcase of core engineering tools, frameworks, and hardware systems with real-time reactive physics and brand logos.
+          </p>
+        </div>
+
+        <!-- Animation 1: Continuous 3D Infinite Logo Marquee Ribbon -->
+        <div class="skills-marquee-container mb-12">
+          <div class="skills-marquee-track">
+            <!-- Set 1 -->
+            <div class="marquee-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
+            <div class="marquee-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
+            <div class="marquee-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+            <div class="marquee-item"><i class="devicon-threejs-original colored"></i><span>Three.js</span></div>
+            <div class="marquee-item"><i class="devicon-figma-plain colored"></i><span>UI / UX</span></div>
+            <div class="marquee-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+            <div class="marquee-item"><i class="devicon-express-original text-emerald-400"></i><span>Express.js</span></div>
+            <div class="marquee-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+            <div class="marquee-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
+            <div class="marquee-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
+            <div class="marquee-item"><i class="devicon-git-plain colored"></i><span>Git &amp; GitHub</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-microchip text-amber-400"></i><span>Hardware</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-brain text-purple-400"></i><span>Machine Learning</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-chart-line text-cyan-400"></i><span>Data Analytics</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-file-pdf text-rose-400"></i><span>ReportLab</span></div>
+
+            <!-- Set 2 (for seamless loop) -->
+            <div class="marquee-item"><i class="devicon-html5-plain colored"></i><span>HTML5</span></div>
+            <div class="marquee-item"><i class="devicon-css3-plain colored"></i><span>CSS3</span></div>
+            <div class="marquee-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+            <div class="marquee-item"><i class="devicon-threejs-original colored"></i><span>Three.js</span></div>
+            <div class="marquee-item"><i class="devicon-figma-plain colored"></i><span>UI / UX</span></div>
+            <div class="marquee-item"><i class="devicon-nodejs-plain colored"></i><span>Node.js</span></div>
+            <div class="marquee-item"><i class="devicon-express-original text-emerald-400"></i><span>Express.js</span></div>
+            <div class="marquee-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+            <div class="marquee-item"><i class="devicon-mysql-plain colored"></i><span>MySQL</span></div>
+            <div class="marquee-item"><i class="devicon-wordpress-plain colored"></i><span>WordPress</span></div>
+            <div class="marquee-item"><i class="devicon-git-plain colored"></i><span>Git &amp; GitHub</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-microchip text-amber-400"></i><span>Hardware</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-brain text-purple-400"></i><span>Machine Learning</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-chart-line text-cyan-400"></i><span>Data Analytics</span></div>
+            <div class="marquee-item"><i class="fa-solid fa-file-pdf text-rose-400"></i><span>ReportLab</span></div>
+          </div>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="flex justify-center mb-10">
+          <div class="skill-category-filters p-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-wrap gap-2 justify-center backdrop-blur-md">
+            <button class="skill-tab-btn active" data-skill-cat="all">All Skills (15)</button>
+            <button class="skill-tab-btn" data-skill-cat="frontend">Frontend &amp; UI (5)</button>
+            <button class="skill-tab-btn" data-skill-cat="backend">Backend &amp; Data (5)</button>
+            <button class="skill-tab-btn" data-skill-cat="ai-hardware">AI, Data &amp; Hardware (5)</button>
+          </div>
+        </div>
+
+        <!-- Animation 2 & 3: Interactive 3D Holographic Animated Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-grid">
+          
+          <!-- Skill 1: HTML5 -->
+          <div class="skill-3d-card" data-cat="frontend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-html5">
+                  <i class="devicon-html5-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-orange" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 95) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">95%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">HTML5 &amp; Semantic Web</h3>
+              <p class="skill-card-sub">Architecture, Accessibility &amp; DOM</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-orange" style="width: 95%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 2: CSS3 -->
+          <div class="skill-3d-card" data-cat="frontend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-css3">
+                  <i class="devicon-css3-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-blue" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 95) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">95%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">CSS3 &amp; Responsive Layouts</h3>
+              <p class="skill-card-sub">Flexbox, Grid, Animations &amp; Glassmorphism</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-blue" style="width: 95%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 3: JavaScript -->
+          <div class="skill-3d-card" data-cat="frontend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-js">
+                  <i class="devicon-javascript-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-yellow" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 90) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">90%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">JavaScript (ES6+)</h3>
+              <p class="skill-card-sub">Async/Await, Events, Web APIs &amp; OOP</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-yellow" style="width: 90%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 4: Three.js -->
+          <div class="skill-3d-card" data-cat="frontend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-threejs">
+                  <i class="devicon-threejs-original text-3xl text-cyan-300"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-cyan" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 85) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">85%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Three.js &amp; 3D WebGL</h3>
+              <p class="skill-card-sub">Shaders, Geometries, Particle Physics &amp; Lights</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-cyan" style="width: 85%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 5: UI / UX -->
+          <div class="skill-3d-card" data-cat="frontend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-uiux">
+                  <i class="devicon-figma-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-pink" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 88) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">88%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">UI / UX Fundamentals</h3>
+              <p class="skill-card-sub">Prototyping, Wireframing, Color Theory &amp; Ergonomics</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-pink" style="width: 88%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 6: Express.js & Node.js -->
+          <div class="skill-3d-card" data-cat="backend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-node">
+                  <i class="devicon-nodejs-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-emerald" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 88) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">88%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Express.js &amp; Node.js</h3>
+              <p class="skill-card-sub">RESTful API Design, Middleware &amp; Routing</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-emerald" style="width: 88%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 7: Python -->
+          <div class="skill-3d-card" data-cat="backend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-python">
+                  <i class="devicon-python-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-blue" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 90) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">90%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Python Programming</h3>
+              <p class="skill-card-sub">Data Structures, Automation &amp; Scripting</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-blue" style="width: 90%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 8: MySQL -->
+          <div class="skill-3d-card" data-cat="backend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-mysql">
+                  <i class="devicon-mysql-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-cyan" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 85) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">85%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">MySQL Database</h3>
+              <p class="skill-card-sub">Relational Schema, Indexing &amp; Queries</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-cyan" style="width: 85%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 9: WordPress -->
+          <div class="skill-3d-card" data-cat="backend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-wordpress">
+                  <i class="devicon-wordpress-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-blue" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 92) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">92%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">WordPress &amp; CMS Systems</h3>
+              <p class="skill-card-sub">Theme Engineering, Plugins &amp; Client Deployments</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-blue" style="width: 92%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 10: Git & GitHub -->
+          <div class="skill-3d-card" data-cat="backend">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-git">
+                  <i class="devicon-git-plain colored text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-orange" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 90) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">90%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Git &amp; GitHub Versioning</h3>
+              <p class="skill-card-sub">Branching, Pull Requests &amp; CI/CD Workflows</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-orange" style="width: 90%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 11: Hardware -->
+          <div class="skill-3d-card" data-cat="ai-hardware">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-hardware">
+                  <i class="fa-solid fa-microchip text-amber-400 text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-amber" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 95) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">95%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Hardware Troubleshooting</h3>
+              <p class="skill-card-sub">Board Diagnostics, OS Configuration &amp; Data Recovery</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-amber" style="width: 95%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 12: Machine Learning -->
+          <div class="skill-3d-card" data-cat="ai-hardware">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-ml">
+                  <i class="fa-solid fa-brain text-purple-400 text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-purple" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 85) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">85%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Machine Learning Models</h3>
+              <p class="skill-card-sub">NOVI/TECH Diploma, Supervised Learning &amp; Training</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-purple" style="width: 85%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 13: Data Analytics -->
+          <div class="skill-3d-card" data-cat="ai-hardware">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-analytics">
+                  <i class="fa-solid fa-chart-line text-cyan-400 text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-cyan" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 86) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">86%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Data Analytics &amp; Reporting</h3>
+              <p class="skill-card-sub">Pandas, NumPy, Statistical Metrics &amp; Trends</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-cyan" style="width: 86%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 14: ReportLab / PDF -->
+          <div class="skill-3d-card" data-cat="ai-hardware">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-pdf">
+                  <i class="fa-solid fa-file-pdf text-rose-400 text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-pink" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 85) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">85%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">ReportLab / PDF Automation</h3>
+              <p class="skill-card-sub">Dynamic Document Generation &amp; Automated Pipeline</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-pink" style="width: 85%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Skill 15: Social Media Analytics -->
+          <div class="skill-3d-card" data-cat="ai-hardware">
+            <div class="skill-3d-card-inner">
+              <div class="flex items-start justify-between mb-4">
+                <div class="skill-logo-box brand-social">
+                  <i class="fa-solid fa-share-nodes text-indigo-400 text-3xl"></i>
+                  <span class="skill-logo-glow"></span>
+                </div>
+                <div class="radial-score-box">
+                  <svg class="radial-ring" viewBox="0 0 44 44">
+                    <circle class="ring-bg" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-val ring-color-purple" cx="22" cy="22" r="18" style="stroke-dashoffset: calc(113 - (113 * 88) / 100);"></circle>
+                  </svg>
+                  <span class="radial-num">88%</span>
+                </div>
+              </div>
+              <h3 class="skill-card-title">Social Media Analytics</h3>
+              <p class="skill-card-sub">Harvest College Reach, Engagement &amp; Funnel Optimization</p>
+              <div class="skill-bar-track mt-4"><div class="skill-bar-fill fill-purple" style="width: 88%;"></div></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE & TIMELINE ================= -->
+    <section id="experience" class="section-wrapper py-24 px-6 bg-slate-950/40">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="section-tag">
+            <i class="fa-solid fa-briefcase text-neon-cyan mr-2"></i>CAREER CHRONICLE
+          </div>
+          <h2 class="section-heading">Work &amp; Academic Timeline</h2>
+          <p class="section-subheading">
+            Track record of continuous advancement from technical hardware diagnostics to founding a digital agency and engineering informatics systems.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <!-- Left: Work Experience -->
+          <div class="lg:col-span-6">
+            <div class="flex items-center gap-3 mb-8">
+              <span class="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400 text-lg border border-cyan-500/20">
+                <i class="fa-solid fa-briefcase"></i>
+              </span>
+              <h3 class="text-2xl font-bold text-white">Professional Experience</h3>
+            </div>
+
+            <div class="timeline-container relative pl-8 border-l border-slate-800 space-y-10">
+              
+              <!-- Job 1 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-cyan-400 ring-4 ring-cyan-500/20"></div>
+                <div class="timeline-badge">2025 — Present</div>
+                <h4 class="text-xl font-bold text-white mt-1">Founder &amp; Web Designer</h4>
+                <div class="text-cyan-400 font-medium text-sm flex items-center gap-2 mb-3">
+                  <span>InkBit Digital Studio</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>Sukabumi, Indonesia</span>
+                </div>
+                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                  <li>Founded and lead a digital studio delivering bespoke web design and branding solutions.</li>
+                  <li>Design and develop responsive, performance-optimized websites and web applications.</li>
+                  <li>Manage full project lifecycle — from client brief and UI/UX design through to deployment.</li>
+                  <li>Consult clients on digital strategy, SEO fundamentals, and online brand identity.</li>
+                </ul>
+              </div>
+
+              <!-- Job 2 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-purple-400 ring-4 ring-purple-500/20"></div>
+                <div class="timeline-badge">2025</div>
+                <h4 class="text-xl font-bold text-white mt-1">Social Media Manager</h4>
+                <div class="text-purple-400 font-medium text-sm flex items-center gap-2 mb-3">
+                  <span>Harvest International Business College</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400"><i class="fa-solid fa-building mr-1"></i>Onsite</span>
+                </div>
+                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                  <li>Planned and managed social media presence across LinkedIn, Instagram, and Facebook.</li>
+                  <li>Created, scheduled, and published content reflecting the college’s brand and offerings.</li>
+                  <li>Analyzed engagement metrics and optimized posting strategy to grow audience reach.</li>
+                </ul>
+              </div>
+
+              <!-- Job 3 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-amber-400 ring-4 ring-amber-500/20"></div>
+                <div class="timeline-badge">2021 — 2024</div>
+                <h4 class="text-xl font-bold text-white mt-1">Computer Technician</h4>
+                <div class="text-amber-400 font-medium text-sm flex items-center gap-2 mb-3">
+                  <span>BSC Computers</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>Sri Lanka</span>
+                </div>
+                <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                  <li>Diagnosed and resolved hardware and software faults on desktops and enterprise laptops.</li>
+                  <li>Performed OS installation, driver configuration, and data recovery for customers.</li>
+                  <li>Provided technical support and guidance to walk-in clients with high satisfaction.</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right: Education & Certifications -->
+          <div class="lg:col-span-6">
+            <div class="flex items-center gap-3 mb-8">
+              <span class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 text-lg border border-purple-500/20">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </span>
+              <h3 class="text-2xl font-bold text-white">Education &amp; Degrees</h3>
+            </div>
+
+            <div class="timeline-container relative pl-8 border-l border-slate-800 space-y-10">
+              
+              <!-- Edu 1 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-sky-400 ring-4 ring-sky-500/20"></div>
+                <div class="timeline-badge">2025 — Present</div>
+                <h4 class="text-xl font-bold text-white mt-1">Informatics Engineering (B.Eng)</h4>
+                <div class="text-sky-400 font-medium text-sm flex items-center gap-2 mb-2">
+                  <span>Universitas Nusa Putra</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400">Sukabumi, Indonesia</span>
+                </div>
+                <p class="text-slate-300 text-sm">
+                  Student ID: <strong>20250040223</strong> • Recipient of Universitas Nusa Putra Scholarship for academic and leadership potential.
+                </p>
+              </div>
+
+              <!-- Edu 2 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-indigo-400 ring-4 ring-indigo-500/20"></div>
+                <div class="timeline-badge">2022 — 2024</div>
+                <h4 class="text-xl font-bold text-white mt-1">GCE Advanced Level (A/L)</h4>
+                <div class="text-indigo-400 font-medium text-sm flex items-center gap-2 mb-2">
+                  <span>KMKM Imam Gazzaly Maha Vidyalaya</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400">Sri Lanka</span>
+                </div>
+                <p class="text-slate-300 text-sm">
+                  Successfully completed in 2024 with a concentration in physical sciences and informatics studies.
+                </p>
+              </div>
+
+              <!-- Edu 3 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-emerald-400 ring-4 ring-emerald-500/20"></div>
+                <div class="timeline-badge">2019 — 2021</div>
+                <h4 class="text-xl font-bold text-white mt-1">GCE Ordinary Level (O/L)</h4>
+                <div class="text-emerald-400 font-medium text-sm flex items-center gap-2 mb-2">
+                  <span>KMKM Imam Gazzaly Maha Vidyalaya</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400">Sri Lanka</span>
+                </div>
+                <p class="text-slate-300 text-sm">Completed in 2021 with distinctions in core sciences and mathematics.</p>
+              </div>
+
+              <!-- Edu 4 -->
+              <div class="timeline-item relative">
+                <div class="timeline-dot bg-slate-400 ring-4 ring-slate-500/20"></div>
+                <div class="timeline-badge">2016 — 2019</div>
+                <h4 class="text-xl font-bold text-white mt-1">Higher Secondary Education</h4>
+                <div class="text-slate-400 font-medium text-sm flex items-center gap-2 mb-2">
+                  <span>Daar Ibnu Mascoth Arabic College</span>
+                  <span class="text-slate-500">•</span>
+                  <span class="text-slate-400">Palamunai, Sri Lanka</span>
+                </div>
+                <p class="text-slate-300 text-sm">Foundational discipline, linguistics, and structured analytical education.</p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FEATURED PROJECTS SECTION ================= -->
+    <section id="projects" class="section-wrapper py-24 px-6">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+          <div>
+            <div class="section-tag">
+              <i class="fa-solid fa-code-fork text-neon-cyan mr-2"></i>PORTFOLIO SHOWCASE
+            </div>
+            <h2 class="section-heading">Featured Works &amp; Systems</h2>
+            <p class="section-subheading max-w-xl">
+              Selected projects demonstrating full-stack engineering, 3D WebGL, data analytics pipelines, and hardware integration.
+            </p>
+          </div>
+
+          <!-- Project Filter Tabs -->
+          <div class="project-filters flex items-center gap-2 mt-6 md:mt-0 p-1.5 rounded-xl bg-slate-900 border border-slate-800">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Web">Web</button>
+            <button class="filter-btn" data-filter="AI / Data">AI / Data</button>
+            <button class="filter-btn" data-filter="Systems">Systems</button>
+          </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-container">
+          <!-- Rendered dynamically from Express /api/projects or default cards -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= CERTIFICATIONS & LEADERSHIP ================= -->
+    <section class="section-wrapper py-24 px-6 bg-slate-950/60 border-t border-slate-800/80">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <!-- Certifications (7 items) -->
+          <div class="lg:col-span-6">
+            <div class="flex items-center gap-3 mb-8">
+              <span class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 text-lg border border-amber-500/20">
+                <i class="fa-solid fa-certificate"></i>
+              </span>
+              <div>
+                <h3 class="text-2xl font-bold text-white">Professional Certifications</h3>
+                <p class="text-xs text-slate-400 font-mono">Diplomas &amp; Specialized Accreditations</p>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              
+              <div class="cert-card flex items-center justify-between p-4 rounded-xl glass-panel">
+                <div class="flex items-center gap-4">
+                  <div class="cert-icon bg-purple-500/20 text-purple-300">
+                    <i class="fa-solid fa-brain"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm sm:text-base">Diploma in Machine Learning</h4>
+                    <span class="text-xs text-slate-400">NOVI/TECH</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-purple-400 border-purple-500/30">AI / ML</span>
+              </div>
+
+              <div class="cert-card flex items-center justify-between p-4 rounded-xl glass-panel">
+                <div class="flex items-center gap-4">
+                  <div class="cert-icon bg-cyan-500/20 text-cyan-300">
+                    <i class="fa-solid fa-microchip"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm sm:text-base">Diploma in Artificial Intelligence</h4>
+                    <span class="text-xs text-slate-400">NOVI/TECH</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-cyan-400 border-cyan-500/30">AI / ML</span>
+              </div>
+
+              <div class="cert-card flex items-center justify-between p-4 rounded-xl glass-panel">
+                <div class="flex items-center gap-4">
+                  <div class="cert-icon bg-emerald-500/20 text-emerald-300">
+                    <i class="fa-solid fa-chart-line"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm sm:text-base">Diploma in Data Analytics</h4>
+                    <span class="text-xs text-slate-400">NOVI/TECH</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-emerald-400 border-emerald-500/30">Data</span>
+              </div>
+
+              <div class="cert-card flex items-center justify-between p-4 rounded-xl glass-panel">
+                <div class="flex items-center gap-4">
+                  <div class="cert-icon bg-rose-500/20 text-rose-300">
+                    <i class="fa-solid fa-palette"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm sm:text-base">Web Designing Certification</h4>
+                    <span class="text-xs text-slate-400">Cyber Lowala Piyath</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-rose-400 border-rose-500/30">Design</span>
+              </div>
+
+              <div class="cert-card flex items-center justify-between p-4 rounded-xl glass-panel">
+                <div class="flex items-center gap-4">
+                  <div class="cert-icon bg-blue-500/20 text-blue-300">
+                    <i class="fa-solid fa-laptop-code"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm sm:text-base">Web Designing Certification</h4>
+                    <span class="text-xs text-slate-400">Suhan / Sara</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-blue-400 border-blue-500/30">Design</span>
+              </div>
+
+              <div class="cert-card flex items-center justify-between p-4 rounded-xl glass-panel">
+                <div class="flex items-center gap-4">
+                  <div class="cert-icon bg-amber-500/20 text-amber-300">
+                    <i class="fa-solid fa-award"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm sm:text-base">GCE Advanced Level (A/L)</h4>
+                    <span class="text-xs text-slate-400">Ministry of Education • 2024</span>
+                  </div>
+                </div>
+                <span class="badge-tag text-amber-400 border-amber-500/30">Academic</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Extracurricular, Leadership & Languages -->
+          <div class="lg:col-span-6 space-y-10">
+            
+            <div>
+              <div class="flex items-center gap-3 mb-8">
+                <span class="p-2.5 rounded-lg bg-rose-500/10 text-rose-400 text-lg border border-rose-500/20">
+                  <i class="fa-solid fa-trophy"></i>
+                </span>
+                <div>
+                  <h3 class="text-2xl font-bold text-white">Leadership &amp; Global Honors</h3>
+                  <p class="text-xs text-slate-400 font-mono">Recognitions &amp; Community Impact</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div class="honor-card p-4 rounded-xl glass-panel">
+                  <div class="text-neon-cyan text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-globe"></i> Global Ambassador
+                  </div>
+                  <h4 class="text-white text-sm font-semibold mt-1">One World Youth Movements</h4>
+                  <p class="text-slate-400 text-xs mt-1">Represented cross-cultural youth initiatives &amp; dialogues.</p>
+                </div>
+
+                <div class="honor-card p-4 rounded-xl glass-panel">
+                  <div class="text-amber-400 text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-medal"></i> Scholarship Awardee
+                  </div>
+                  <h4 class="text-white text-sm font-semibold mt-1">Universitas Nusa Putra</h4>
+                  <p class="text-slate-400 text-xs mt-1">Awarded academic scholarship for Informatics Engineering.</p>
+                </div>
+
+                <div class="honor-card p-4 rounded-xl glass-panel">
+                  <div class="text-purple-400 text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved"></i> Senior Prefect
+                  </div>
+                  <h4 class="text-white text-sm font-semibold mt-1">KMKM Imam Gazzaly</h4>
+                  <p class="text-slate-400 text-xs mt-1">Led student discipline, assemblies, and school representation.</p>
+                </div>
+
+                <div class="honor-card p-4 rounded-xl glass-panel">
+                  <div class="text-emerald-400 text-sm font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-ranking-star"></i> Island Wide 7th Place
+                  </div>
+                  <h4 class="text-white text-sm font-semibold mt-1">Social Science Competition</h4>
+                  <p class="text-slate-400 text-xs mt-1">Ranked 7th nationally across Sri Lanka in competition.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Languages Bar -->
+            <div class="glass-panel p-6 rounded-2xl">
+              <h4 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-language text-cyan-400"></i>
+                <span>Languages &amp; Global Communication</span>
+              </h4>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                <div class="lang-box p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-bold text-white text-sm">Tamil</div>
+                  <div class="text-xs text-cyan-400 font-mono mt-0.5">Native</div>
+                </div>
+                <div class="lang-box p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-bold text-white text-sm">English</div>
+                  <div class="text-xs text-emerald-400 font-mono mt-0.5">Fluent</div>
+                </div>
+                <div class="lang-box p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-bold text-white text-sm">Sinhala</div>
+                  <div class="text-xs text-amber-400 font-mono mt-0.5">Intermediate</div>
+                </div>
+                <div class="lang-box p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-bold text-white text-sm">Indonesian</div>
+                  <div class="text-xs text-purple-400 font-mono mt-0.5">Conversational</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= CONTACT SECTION WITH EXPRESS API ================= -->
+    <section id="contact" class="section-wrapper py-24 px-6 relative">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="section-tag">
+            <i class="fa-solid fa-paper-plane text-neon-cyan mr-2"></i>CONNECT &amp; COLLABORATE
+          </div>
+          <h2 class="section-heading">Let's Build Something Exceptional</h2>
+          <p class="section-subheading">
+            Whether you have a web design project for InkBit Digital Studio, an engineering role, or a technical inquiry, my inbox is open.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          <!-- Contact Info Cards (Left) -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <div class="contact-info-card glass-panel p-6 flex items-center gap-5">
+              <div class="contact-icon-box bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fa-solid fa-envelope text-xl"></i>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-mono text-slate-400">Direct Email</span>
+                <a href="mailto:atheeb1311@gmail.com" class="block text-white font-bold hover:text-neon-cyan transition">atheeb1311@gmail.com</a>
+              </div>
+            </div>
+
+            <div class="contact-info-card glass-panel p-6 flex items-center gap-5">
+              <div class="contact-icon-box bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i class="fa-solid fa-phone text-xl"></i>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-mono text-slate-400">Phone / WhatsApp</span>
+                <a href="tel:+94779413135" class="block text-white font-bold hover:text-emerald-400 transition">+94 77 941 3135</a>
+              </div>
+            </div>
+
+            <div class="contact-info-card glass-panel p-6 flex items-center gap-5">
+              <div class="contact-icon-box bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <i class="fa-solid fa-location-dot text-xl"></i>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-mono text-slate-400">Location</span>
+                <p class="text-white font-bold">Sukabumi, Indonesia <span class="text-slate-400 font-normal">(Origin: Sri Lanka)</span></p>
+              </div>
+            </div>
+
+            <div class="contact-info-card glass-panel p-6 flex items-center gap-5">
+              <div class="contact-icon-box bg-pink-500/10 text-pink-400 border border-pink-500/20">
+                <i class="fa-brands fa-github text-xl"></i>
+              </div>
+              <div>
+                <span class="text-xs uppercase font-mono text-slate-400">GitHub Repository</span>
+                <a href="https://github.com/atheeb11" target="_blank" rel="noopener noreferrer" class="block text-white font-bold hover:text-pink-400 transition">github.com/atheeb11</a>
+              </div>
+            </div>
+
+            <!-- Server Status Card -->
+            <div class="server-status-card p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="status-dot-active"></span>
+                  <span class="text-xs font-mono text-slate-300">Express.js API Engine</span>
+                </div>
+                <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">CONNECTED</span>
+              </div>
+              <p class="text-xs text-slate-400 font-mono">
+                Messages submit directly via REST API endpoint <code class="text-cyan-300">/api/contact</code> and are preserved into local JSON ledger.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Contact Form (Right) with Express POST Handler -->
+          <div class="lg:col-span-7 glass-panel p-8 sm:p-10 relative">
+            <h3 class="text-2xl font-bold text-white mb-2">Send an Instant Message</h3>
+            <p class="text-slate-400 text-sm mb-8">Leave your details and message below. You will receive immediate visual confirmation.</p>
+
+            <form id="contact-form" class="space-y-6">
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="form-group">
+                  <label for="form-name" class="form-label">Your Name <span class="text-rose-400">*</span></label>
+                  <input type="text" id="form-name" name="name" required class="form-input" placeholder="e.g. John Doe">
+                </div>
+                <div class="form-group">
+                  <label for="form-email" class="form-label">Email Address <span class="text-rose-400">*</span></label>
+                  <input type="email" id="form-email" name="email" required class="form-input" placeholder="e.g. john@company.com">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="form-subject" class="form-label">Subject / Purpose</label>
+                <input type="text" id="form-subject" name="subject" class="form-input" placeholder="e.g. Website Project / Freelance Inquiry / Collaboration">
+              </div>
+
+              <div class="form-group">
+                <label for="form-message" class="form-label">Your Message <span class="text-rose-400">*</span></label>
+                <textarea id="form-message" name="message" rows="5" required class="form-input" placeholder="Tell me about your project, timeline, or inquiry..."></textarea>
+              </div>
+
+              <button type="submit" id="submit-btn" class="btn-primary w-full py-4 text-base font-bold flex items-center justify-center gap-3">
+                <span id="btn-text">Transmit Message to Express API</span>
+                <i class="fa-solid fa-paper-plane text-sm"></i>
+              </button>
+
+              <!-- Form Response Alert Box -->
+              <div id="form-alert" class="hidden mt-4 p-4 rounded-xl text-sm font-mono transition-all"></div>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer-section py-12 px-6 border-t border-slate-800 bg-slate-950 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Brand & Copyright -->
+      <div class="flex items-center gap-3">
+        <div class="logo-box scale-90">
+          <span class="logo-letters">MA</span>
+        </div>
+        <div>
+          <div class="text-white font-bold">Mubarak Atheeb</div>
+          <div class="text-xs text-slate-400">© 2026 InkBit Digital Studio. All rights reserved.</div>
+        </div>
+      </div>
+
+      <!-- Quick Nav -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-mono text-slate-400">
+        <a href="#hero" class="hover:text-cyan-400 transition">Back to Top</a>
+        <a href="#about" class="hover:text-cyan-400 transition">About</a>
+        <a href="#skills" class="hover:text-cyan-400 transition">Skills</a>
+        <a href="#projects" class="hover:text-cyan-400 transition">Projects</a>
+        <a href="#terminal" class="hover:text-cyan-400 transition">Terminal</a>
+        <a href="#contact" class="hover:text-cyan-400 transition">Contact</a>
+      </div>
+
+      <!-- Tech Stack Credit -->
+      <div class="text-xs font-mono text-slate-400 text-center md:text-right">
+        Powered by <span class="text-emerald-400">Express.js</span> &amp; <span class="text-cyan-400">Three.js 3D WebGL</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= RESUME / CV MODAL ================= -->
+  <div id="resume-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="resume-modal-dialog w-full max-w-4xl bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl flex flex-col max-h-[92vh] overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-file-pdf text-rose-400 text-xl"></i>
+          <div>
+            <h3 class="font-bold text-white text-base sm:text-lg">Curriculum Vitae — Mubarak Atheeb</h3>
+            <span class="text-xs text-slate-400 font-mono">Informatics Engineering • Universitas Nusa Putra</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="print-resume-btn" class="px-3.5 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 font-mono text-xs flex items-center gap-2 transition">
+            <i class="fa-solid fa-print"></i>
+            <span>Print / Save PDF</span>
+          </button>
+          <button id="close-resume-btn" class="text-slate-400 hover:text-white text-xl p-1" aria-label="Close CV Modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Printable CV) -->
+      <div class="resume-modal-body p-6 sm:p-10 overflow-y-auto space-y-8 bg-slate-900 text-slate-200 print:text-black print:bg-white text-sm" id="printable-cv">
+        <!-- CV Header -->
+        <div class="border-b border-slate-700/80 pb-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h1 class="text-3xl font-extrabold text-white print:text-black">MUBARAK ATHEEB</h1>
+              <p class="text-cyan-400 print:text-blue-800 font-semibold mt-1">
+                Informatics Engineering Student | Founder, InkBit Digital Studio
+              </p>
+              <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-400 print:text-gray-600 mt-2 font-mono">
+                <span><i class="fa-solid fa-phone mr-1"></i>+94 77 941 3135</span>
+                <span><i class="fa-solid fa-location-dot mr-1"></i>Sukabumi, Indonesia</span>
+                <span><i class="fa-solid fa-envelope mr-1"></i>atheeb1311@gmail.com</span>
+                <span><i class="fa-brands fa-github mr-1"></i>github.com/atheeb11</span>
+              </div>
+            </div>
+            <img src="/images/mubarak-atheeb.png" alt="Mubarak Atheeb" class="w-20 h-20 object-cover rounded-xl border border-slate-700 hidden sm:block">
+          </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div>
+          <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 print:text-blue-700 border-b border-slate-800 pb-1 mb-3">Profile</h2>
+          <p class="text-slate-300 print:text-gray-800 leading-relaxed">
+            First-year Informatics Engineering student at Universitas Nusa Putra, Sukabumi, Indonesia (Student ID: 20250040223), and Founder &amp; Web Designer at InkBit Digital Studio. Currently serving as Social Media Manager at Harvest International Business College. Experienced in web development, Python programming, database management, and hardware support. Passionate about AI, cybersecurity, and software engineering, with a strong record of leadership, volunteering, and international programme participation.
+          </p>
+        </div>
+
+        <!-- Work Experience -->
+        <div>
+          <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 print:text-blue-700 border-b border-slate-800 pb-1 mb-4">Work Experience</h2>
+          
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between items-baseline">
+                <span class="font-bold text-white print:text-black">Founder &amp; Web Designer</span>
+                <span class="text-xs font-mono text-slate-400">2025 — Present</span>
+              </div>
+              <div class="text-xs text-cyan-300 print:text-blue-600 mb-1">InkBit Digital Studio • Sukabumi, Indonesia</div>
+              <ul class="list-disc list-inside text-xs text-slate-300 print:text-gray-700 space-y-1">
+                <li>Founded and lead a digital design studio delivering web design and branding solutions.</li>
+                <li>Design and develop responsive, performance-optimised websites and web applications.</li>
+                <li>Manage full project lifecycle — from client brief and UI/UX design through to deployment.</li>
+                <li>Consult clients on digital strategy, SEO fundamentals, and online brand identity.</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-baseline">
+                <span class="font-bold text-white print:text-black">Social Media Manager</span>
+                <span class="text-xs font-mono text-slate-400">2025</span>
+              </div>
+              <div class="text-xs text-purple-300 print:text-purple-600 mb-1">Harvest International Business College • Onsite</div>
+              <ul class="list-disc list-inside text-xs text-slate-300 print:text-gray-700 space-y-1">
+                <li>Planned and managed social media presence across LinkedIn, Instagram, and Facebook.</li>
+                <li>Created, scheduled, and published content reflecting the college’s brand and offerings.</li>
+                <li>Analysed engagement metrics and optimised posting strategy to grow audience reach.</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-baseline">
+                <span class="font-bold text-white print:text-black">Computer Technician</span>
+                <span class="text-xs font-mono text-slate-400">2021 — 2024</span>
+              </div>
+              <div class="text-xs text-amber-300 print:text-yellow-600 mb-1">BSC Computers • Sri Lanka</div>
+              <ul class="list-disc list-inside text-xs text-slate-300 print:text-gray-700 space-y-1">
+                <li>Diagnosed and resolved hardware and software faults on desktops and laptops.</li>
+                <li>Performed OS installation, driver configuration, and data recovery for customers.</li>
+                <li>Provided technical support and guidance to walk-in clients with high satisfaction.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div>
+          <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 print:text-blue-700 border-b border-slate-800 pb-1 mb-4">Education</h2>
+          <div class="space-y-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-bold text-white print:text-black">Universitas Nusa Putra</div>
+                <div class="text-xs text-slate-400">Informatics Engineering • Student ID: 20250040223</div>
+              </div>
+              <div class="text-xs font-mono text-slate-400 text-right">
+                <div>2025 — Present</div>
+                <div class="text-[11px] text-slate-500">Sukabumi, Indonesia</div>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-bold text-white print:text-black">KMKM Imam Gazzaly Maha Vidyalaya</div>
+                <div class="text-xs text-slate-400">GCE Advanced Level (A/L) • Completed 2024</div>
+              </div>
+              <div class="text-xs font-mono text-slate-400 text-right">
+                <div>2022 — 2024</div>
+                <div class="text-[11px] text-slate-500">Sri Lanka</div>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-bold text-white print:text-black">KMKM Imam Gazzaly Maha Vidyalaya</div>
+                <div class="text-xs text-slate-400">GCE Ordinary Level (O/L) • Completed 2021</div>
+              </div>
+              <div class="text-xs font-mono text-slate-400 text-right">
+                <div>2019 — 2021</div>
+                <div class="text-[11px] text-slate-500">Sri Lanka</div>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-bold text-white print:text-black">Daar Ibnu Mascoth Arabic College</div>
+                <div class="text-xs text-slate-400">Higher Secondary Education</div>
+              </div>
+              <div class="text-xs font-mono text-slate-400 text-right">
+                <div>2016 — 2019</div>
+                <div class="text-[11px] text-slate-500">Palamunai, Sri Lanka</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Skills Summary -->
+        <div>
+          <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 print:text-blue-700 border-b border-slate-800 pb-1 mb-3">Technical Skills</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300 print:text-gray-800">
+            <div><strong class="text-white print:text-black">Web Development:</strong> HTML5, CSS3, JavaScript, Responsive Web Design</div>
+            <div><strong class="text-white print:text-black">Backend:</strong> Express.js, Node.js, REST APIs</div>
+            <div><strong class="text-white print:text-black">Programming:</strong> Python, Data Analytics, ML Models</div>
+            <div><strong class="text-white print:text-black">Database &amp; CMS:</strong> MySQL, WordPress, CMS platforms</div>
+            <div><strong class="text-white print:text-black">Dev Tools:</strong> Git, GitHub, VS Code</div>
+            <div><strong class="text-white print:text-black">Other:</strong> Hardware Troubleshooting, ReportLab / PDF, Social Media</div>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div>
+          <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400 print:text-blue-700 border-b border-slate-800 pb-1 mb-3">Certifications</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300 print:text-gray-800">
+            <div>• Diploma in Machine Learning — NOVI/TECH</div>
+            <div>• Diploma in Artificial Intelligence — NOVI/TECH</div>
+            <div>• Diploma in Data Analytics — NOVI/TECH</div>
+            <div>• Web Designing — Cyber Lowala Piyath</div>
+            <div>• Web Designing — Suhan / Sara</div>
+            <div>• GCE Advanced Level (A/L) — Completed 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PROJECT DETAILS MODAL ================= -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden" id="project-modal-content">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </div>
+
+  <!-- ================= FULLSCREEN MATRIX RAIN EASTER EGG ================= -->
+  <div id="matrix-modal" class="fixed inset-0 z-50 hidden bg-black">
+    <canvas id="matrix-canvas" class="w-full h-full block"></canvas>
+    <button id="close-matrix-btn" class="absolute top-6 right-6 z-50 px-4 py-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-lg font-mono text-sm hover:bg-emerald-500/30 transition">
+      <i class="fa-solid fa-arrow-left mr-2"></i>Exit Matrix
+    </button>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Scripts -->
+  <script src="/js/three-scene.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+{
+  "name": "Mubarak Atheeb",
+  "heroTitle": "Mubarak Atheeb",
+  "tagline": "Informatics Engineering Student | Founder, InkBit Digital Studio",
+  "titles": [
+    "Informatics Engineering Student",
+    "Founder @ InkBit Digital Studio",
+    "Full-Stack Web Developer",
+    "AI & Data Analytics Enthusiast",
+    "Hardware & Systems Specialist"
+  ],
+  "about": "First-year Informatics Engineering student at Universitas Nusa Putra, Sukabumi, Indonesia (Student ID: 20250040223), and Founder & Web Designer at InkBit Digital Studio. Currently serving as Social Media Manager at Harvest International Business College. Experienced in web development, Python programming, database management, and hardware support. Passionate about AI, cybersecurity, and software engineering, with a strong record of leadership, volunteering, and international programme participation.",
+  "location": "Sukabumi, Indonesia",
+  "origin": "Sri Lanka",
+  "email": "atheeb1311@gmail.com",
+  "phone": "+94 77 941 3135",
+  "github": "https://github.com/atheeb11",
+  "avatar": "/images/mubarak-atheeb.png",
+  "stats": [
+    { "label": "Projects Delivered", "value": "20+" },
+    { "label": "Years Experience", "value": "4+" },
+    { "label": "Certifications", "value": "7+" },
+    { "label": "Client Satisfaction", "value": "100%" }
+  ],
+  "experiences": [
+    {
+      "role": "Founder & Web Designer",
+      "company": "InkBit Digital Studio",
+      "period": "2025 — Present",
+      "location": "Sukabumi, Indonesia",
+      "points": [
+        "Founded and lead a digital design studio delivering bespoke web design and modern branding solutions.",
+        "Design and develop high-performance, responsive websites and scalable web applications.",
+        "Manage full project lifecycles — from client discovery and UI/UX prototyping to deployment.",
+        "Consult global clients on digital strategy, SEO fundamentals, and brand authority."
+      ],
+      "badge": "Active Studio"
+    },
+    {
+      "role": "Social Media Manager",
+      "company": "Harvest International Business College",
+      "period": "2025",
+      "location": "Onsite",
+      "points": [
+        "Architected and planned unified social media presence across LinkedIn, Instagram, and Facebook.",
+        "Created, scheduled, and published engaging content communicating academic and business offerings.",
+        "Analyzed key engagement metrics and data insights to continuously expand audience reach and conversion."
+      ],
+      "badge": "Strategy & Media"
+    },
+    {
+      "role": "Computer Technician",
+      "company": "BSC Computers",
+      "period": "2021 — 2024",
+      "location": "Sri Lanka",
+      "points": [
+        "Diagnosed and repaired complex hardware and software faults on enterprise desktops and laptops.",
+        "Conducted operating system installations, driver optimizations, and critical data recovery procedures.",
+        "Delivered technical guidance and high-satisfaction support to walk-in clients and small businesses."
+      ],
+      "badge": "Hardware & Systems"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universitas Nusa Putra",
+      "degree": "Informatics Engineering (B.Eng)",
+      "period": "2025 — Present",
+      "location": "Sukabumi, Indonesia",
+      "detail": "Student ID: 20250040223 • University Scholarship Awardee"
+    },
+    {
+      "institution": "KMKM Imam Gazzaly Maha Vidyalaya",
+      "degree": "GCE Advanced Level (A/L)",
+      "period": "2022 — 2024",
+      "location": "Sri Lanka",
+      "detail": "Physical Science & Informatics focus • Completed 2024"
+    },
+    {
+      "institution": "KMKM Imam Gazzaly Maha Vidyalaya",
+      "degree": "GCE Ordinary Level (O/L)",
+      "period": "2019 — 2021",
+      "location": "Sri Lanka",
+      "detail": "Completed 2021 with distinctions"
+    },
+    {
+      "institution": "Daar Ibnu Mascoth Arabic College",
+      "degree": "Higher Secondary Education",
+      "period": "2016 — 2019",
+      "location": "Palamunai, Sri Lanka",
+      "detail": "Classical disciplines and analytical studies"
+    }
+  ],
+  "skills": {
+    "Web & Frontend": [
+      { "name": "HTML5 & CSS3", "level": 95, "icon": "fa-brands fa-html5" },
+      { "name": "JavaScript (ES6+)", "level": 90, "icon": "fa-brands fa-js" },
+      { "name": "Responsive Design", "level": 95, "icon": "fa-solid fa-mobile-screen-button" },
+      { "name": "Three.js & 3D WebGL", "level": 85, "icon": "fa-solid fa-cubes" },
+      { "name": "UI / UX Fundamentals", "level": 88, "icon": "fa-solid fa-bezier-curve" }
+    ],
+    "Backend & Systems": [
+      { "name": "Express.js & Node.js", "level": 88, "icon": "fa-brands fa-node-js" },
+      { "name": "Python", "level": 90, "icon": "fa-brands fa-python" },
+      { "name": "MySQL & Relational DBs", "level": 85, "icon": "fa-solid fa-database" },
+      { "name": "WordPress & CMS", "level": 92, "icon": "fa-brands fa-wordpress" },
+      { "name": "Git & GitHub", "level": 90, "icon": "fa-brands fa-git-alt" }
+    ],
+    "AI, Data & Special": [
+      { "name": "Machine Learning", "level": 84, "icon": "fa-solid fa-brain" },
+      { "name": "Artificial Intelligence", "level": 85, "icon": "fa-solid fa-microchip" },
+      { "name": "Data Analytics", "level": 86, "icon": "fa-solid fa-chart-line" },
+      { "name": "Hardware Troubleshooting", "level": 95, "icon": "fa-solid fa-screwdriver-wrench" },
+      { "name": "PDF / ReportLab Automation", "level": 85, "icon": "fa-solid fa-file-pdf" }
+    ]
+  },
+  "certifications": [
+    { "title": "Diploma in Machine Learning", "issuer": "NOVI/TECH", "badge": "AI & ML" },
+    { "title": "Diploma in Artificial Intelligence", "issuer": "NOVI/TECH", "badge": "AI & ML" },
+    { "title": "Diploma in Data Analytics", "issuer": "NOVI/TECH", "badge": "Data" },
+    { "title": "Web Designing Certification", "issuer": "Cyber Lowala Piyath", "badge": "Design" },
+    { "title": "Web Designing Certification", "issuer": "Suhan / Sara", "badge": "Design" },
+    { "title": "GCE Advanced Level (A/L)", "issuer": "Department of Examinations", "year": "2024", "badge": "Academic" },
+    { "title": "GCE Ordinary Level (O/L)", "issuer": "Department of Examinations", "year": "2021", "badge": "Academic" }
+  ],
+  "leadership": [
+    { "title": "Founder & Lead", "org": "InkBit Digital Studio", "desc": "Leading web design and brand engineering projects." },
+    { "title": "Global Youth Ambassador", "org": "One World Youth Movements", "desc": "Representing international youth initiatives and leadership." },
+    { "title": "Scholarship Awardee", "org": "Universitas Nusa Putra", "desc": "Recognized for academic merit and potential in Informatics Engineering." },
+    { "title": "Senior Prefect", "org": "KMKM Imam Gazzaly Maha Vidyalaya", "desc": "Demonstrated discipline, school leadership, and student administration." },
+    { "title": "School Web Designing Team Leader", "org": "KMKM Imam Gazzaly Maha Vidyalaya", "desc": "Spearheaded digital solutions, portals, and media for school events." },
+    { "title": "Road & Student Safety Team Leader", "org": "KMKM Imam Gazzaly Maha Vidyalaya", "desc": "Organized community safety campaigns and protocol enforcement." },
+    { "title": "Member", "org": "International Youth Climate Forum (WCU)", "desc": "Active participation in global sustainability dialogues." },
+    { "title": "Island Wide 7th Place", "org": "Social Science Competition", "desc": "National-level academic recognition in Sri Lanka." }
+  ],
+  "languages": [
+    { "lang": "Tamil", "level": "Native" },
+    { "lang": "English", "level": "Native / Fluent" },
+    { "lang": "Sinhala", "level": "Intermediate" },
+    { "lang": "Indonesian", "level": "Beginner / Conversational" }
+  ],
+  "projects": [
+    {
+      "id": "inkbit-studio",
+      "title": "InkBit Digital Studio Platform",
+      "category": "Web",
+      "desc": "A boutique digital agency portal offering interactive web design, modern brand architecture, and performance-tuned web applications.",
+      "tech": ["HTML5", "CSS3 / SCSS", "JavaScript", "Express.js", "Three.js"],
+      "image": "/images/project-inkbit.png",
+      "github": "https://github.com/atheeb11",
+      "featured": true
+    },
+    {
+      "id": "ai-data-engine",
+      "title": "Automated ReportLab & Data Analytics",
+      "category": "AI / Data",
+      "desc": "Intelligent automated reporting pipeline built with Python and ReportLab to generate dynamic analytical PDF dashboards from database queries.",
+      "tech": ["Python", "ReportLab", "MySQL", "Data Analytics"],
+      "image": "/images/project-analytics.png",
+      "github": "https://github.com/atheeb11",
+      "featured": true
+    },
+    {
+      "id": "hardware-diagnostics",
+      "title": "Hardware Diagnostics & Recovery Toolkit",
+      "category": "Systems",
+      "desc": "System diagnostics protocol documentation and automated recovery tooling suite developed during 3+ years of professional PC servicing.",
+      "tech": ["Hardware Architecture", "OS Deployment", "Data Recovery", "Shell Scripting"],
+      "image": "/images/project-hardware.png",
+      "github": "https://github.com/atheeb11",
+      "featured": true
+    },
+    {
+      "id": "harvest-college-portal",
+      "title": "Harvest Business College Media Engine",
+      "category": "Web",
+      "desc": "Multi-channel content scheduling and performance metrics monitoring pipeline delivering consistent growth across student recruitment channels.",
+      "tech": ["Social Analytics", "WordPress", "JavaScript", "SEO"],
+      "image": "/images/project-harvest.png",
+      "github": "https://github.com/atheeb11",
+      "featured": false
+    },
+    {
+      "id": "ml-predictive-suite",
+      "title": "Machine Learning Prediction Models",
+      "category": "AI / Data",
+      "desc": "Supervised and unsupervised machine learning pipelines implementing classification, regression, and data preprocessing for real-world datasets.",
+      "tech": ["Python", "Scikit-Learn", "NumPy", "Pandas"],
+      "image": "/images/project-ml.png",
+      "github": "https://github.com/atheeb11",
+      "featured": false
+    },
+    {
+      "id": "3d-cyber-portfolio",
+      "title": "3D Cybernetic Portfolio Experience",
+      "category": "Web",
+      "desc": "Immersive 3D interactive portfolio featuring custom Three.js WebGL particle constellations, Express.js backend API, and interactive terminal.",
+      "tech": ["Three.js", "Express.js", "WebGL", "GSAP"],
+      "image": "/images/project-portfolio.png",
+      "github": "https://github.com/atheeb11",
+      "featured": true
+    }
+  ]
+}
+

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="cyanPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bgGrad5)" />
+  <rect x="60" y="50" width="680" height="400" rx="16" fill="#0b0f19" stroke="rgba(6, 182, 212, 0.3)" stroke-width="2" />
+  <circle cx="90" cy="75" r="6" fill="#ef4444" />
+  <circle cx="110" cy="75" r="6" fill="#eab308" />
+  <circle cx="130" cy="75" r="6" fill="#22c55e" />
+  <text x="100" y="150" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="30">ML Predictive Suite</text>
+  <text x="100" y="185" fill="url(#cyanPurple)" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="16">SUPERVISED CLASSIFICATION • NEURAL NODES • MODEL EVALUATION</text>
+  <!-- Neural graph visualization -->
+  <line x1="200" y1="260" x2="350" y2="240" stroke="#06b6d4" stroke-width="2" opacity="0.6" />
+  <line x1="200" y1="260" x2="350" y2="300" stroke="#06b6d4" stroke-width="2" opacity="0.6" />
+  <line x1="200" y1="340" x2="350" y2="240" stroke="#06b6d4" stroke-width="2" opacity="0.6" />
+  <line x1="200" y1="340" x2="350" y2="300" stroke="#06b6d4" stroke-width="2" opacity="0.6" />
+  <line x1="350" y1="240" x2="520" y2="270" stroke="#a855f7" stroke-width="2" opacity="0.7" />
+  <line x1="350" y1="300" x2="520" y2="270" stroke="#a855f7" stroke-width="2" opacity="0.7" />
+  
+  <circle cx="200" cy="260" r="16" fill="#0284c7" />
+  <circle cx="200" cy="340" r="16" fill="#0284c7" />
+  <circle cx="350" cy="240" r="16" fill="#06b6d4" />
+  <circle cx="350" cy="300" r="16" fill="#06b6d4" />
+  <circle cx="520" cy="270" r="18" fill="#a855f7" />
+  <text x="560" y="275" fill="#e2e8f0" font-family="'Courier New', monospace" font-size="14">Accuracy: 98.4%</text>
+</svg>
+

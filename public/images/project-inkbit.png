@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#311042" />
+    </linearGradient>
+    <linearGradient id="neonCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="accentPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bgGrad1)" />
+  <g opacity="0.15">
+    <circle cx="100" cy="100" r="180" fill="#3b82f6" />
+    <circle cx="700" cy="400" r="220" fill="#ec4899" />
+  </g>
+  <!-- Browser Chrome Mockup -->
+  <rect x="60" y="50" width="680" height="400" rx="16" fill="#0b0f19" stroke="rgba(255,255,255,0.12)" stroke-width="2" />
+  <circle cx="90" cy="75" r="6" fill="#ef4444" />
+  <circle cx="110" cy="75" r="6" fill="#eab308" />
+  <circle cx="130" cy="75" r="6" fill="#22c55e" />
+  <rect x="160" y="65" width="400" height="20" rx="6" fill="#1e293b" />
+  <text x="180" y="79" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="11">inkbitdigital.com / design-studio</text>
+  <!-- Card Content -->
+  <text x="100" y="170" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="34">InkBit Digital Studio</text>
+  <text x="100" y="210" fill="url(#neonCyan)" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="18">MODERN WEB ARCHITECTURE & BRAND DESIGN</text>
+  <rect x="100" y="240" width="140" height="42" rx="8" fill="url(#accentPink)" />
+  <text x="132" y="266" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="14">EXPLORE</text>
+  <!-- Graphic Mockup -->
+  <rect x="420" y="130" width="280" height="190" rx="12" fill="#131b2e" stroke="#3b82f6" stroke-width="1.5" />
+  <circle cx="480" cy="190" r="30" fill="url(#neonCyan)" opacity="0.8" />
+  <rect x="530" y="170" width="140" height="12" rx="4" fill="#38bdf8" />
+  <rect x="530" y="195" width="100" height="10" rx="4" fill="#64748b" />
+  <rect x="450" y="240" width="220" height="8" rx="4" fill="#334155" />
+  <rect x="450" y="260" width="180" height="8" rx="4" fill="#334155" />
+  <rect x="450" y="280" width="140" height="8" rx="4" fill="#334155" />
+</svg>
+

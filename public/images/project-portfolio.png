@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="cyberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#818cf8" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bgGrad6)" />
+  <rect x="60" y="50" width="680" height="400" rx="16" fill="#030712" stroke="rgba(56, 189, 248, 0.4)" stroke-width="2" />
+  <circle cx="90" cy="75" r="6" fill="#ef4444" />
+  <circle cx="110" cy="75" r="6" fill="#eab308" />
+  <circle cx="130" cy="75" r="6" fill="#22c55e" />
+  <text x="100" y="150" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="30">3D Cybernetic Portfolio</text>
+  <text x="100" y="185" fill="url(#cyberGrad)" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="16">THREE.JS • WEBGL SHADERS • EXPRESS.JS BACKEND • INTERACTIVE TERMINAL</text>
+  <!-- 3D wireframe cube visual -->
+  <polygon points="400,220 500,260 400,300 300,260" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <polygon points="400,300 500,260 500,370 400,410" fill="none" stroke="#818cf8" stroke-width="2.5" />
+  <polygon points="400,300 300,260 300,370 400,410" fill="none" stroke="#c084fc" stroke-width="2.5" />
+  <circle cx="400" cy="300" r="8" fill="#38bdf8" />
+</svg>
+
