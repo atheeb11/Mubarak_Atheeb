@@ -6,6 +6,16 @@
   <title>Mubarak Atheeb | 3D Interactive Portfolio & Informatics Engineer</title>
   <meta name="description" content="Portfolio of Mubarak Atheeb — Informatics Engineering Student, Founder at InkBit Digital Studio, Full-Stack Developer, and AI Enthusiast.">
   <link rel="icon" type="image/png" href="/images/mubarak-atheeb.png">
+  <meta name="theme-color" content="#060913">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mubarak Atheeb | 3D Interactive Portfolio">
+  <meta property="og:description" content="Informatics Engineering Student at Universitas Nusa Putra, AWS Student Builder Community Leader, Founder at InkBit Digital Studio.">
+  <meta property="og:image" content="/images/mubarak-atheeb.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mubarak Atheeb | 3D Interactive Portfolio">
+  <meta name="twitter:description" content="Informatics Engineering Student, AWS Student Builder Leader, Founder at InkBit Digital Studio.">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,10 +177,6 @@
             <button id="open-resume-btn" class="btn-outline">
               <i class="fa-solid fa-file-pdf text-rose-400 mr-2"></i>
               <span>View CV / Resume</span>
-            </button>
-            <button id="hero-voice-btn" class="btn-outline border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/10">
-              <i class="fa-solid fa-volume-high text-cyan-400 mr-2"></i>
-              <span>Listen to Intro</span>
             </button>
             <a href="#contact" class="btn-outline">
               <i class="fa-regular fa-paper-plane mr-2"></i>
@@ -1583,43 +1589,10 @@
     </button>
   </div>
 
-  <!-- ================= FLOATING AI VOICEOVER & TELEPROMPTER HUD ================= -->
-  <div id="voiceover-hud" class="fixed bottom-6 left-6 z-50 max-w-lg w-[calc(100%-3rem)] sm:w-auto transition-all duration-300">
-    <div class="voiceover-card flex items-center gap-3.5 p-3.5 sm:px-4 rounded-2xl glass-panel border border-cyan-500/40 shadow-2xl backdrop-blur-xl">
-      <!-- Play/Pause Control Button -->
-      <button id="voice-play-btn" class="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/30 hover:scale-105 active:scale-95 transition cursor-pointer" aria-label="Toggle Voice Introduction">
-        <i class="fa-solid fa-play text-lg" id="voice-play-icon"></i>
-      </button>
-
-      <!-- Text & Audio Wave Monitor -->
-      <div class="flex-1 min-w-0 pr-1">
-        <div class="flex items-center justify-between gap-2 mb-0.5">
-          <div class="flex items-center gap-2 truncate">
-            <span class="text-xs font-bold text-white tracking-wide">Mubarak's Voiceover</span>
-            <span class="voice-badge">AI Narrator</span>
-          </div>
-          <!-- Equalizer Audio Waveform -->
-          <div class="voice-waves flex items-end gap-1 h-3.5" id="voice-waves">
-            <span class="wave-bar"></span>
-            <span class="wave-bar"></span>
-            <span class="wave-bar"></span>
-            <span class="wave-bar"></span>
-            <span class="wave-bar"></span>
-          </div>
-        </div>
-
-        <!-- Teleprompter / Transcript Live Stream -->
-        <p class="text-[11px] text-cyan-300/95 font-mono truncate" id="voice-transcript-snippet">
-          "👋 Welcome to My Profile! I'm Mubarak Atheeb..."
-        </p>
-      </div>
-
-      <!-- Dismiss Button -->
-      <button id="voice-dismiss-btn" class="text-slate-400 hover:text-white text-xs p-1.5 rounded-lg hover:bg-slate-800 transition" title="Dismiss Voiceover Bar" aria-label="Dismiss Voice Widget">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-  </div>
+  <!-- Floating Back to Top Cyber Rocket Button -->
+  <button id="back-to-top" class="fixed bottom-24 right-6 z-40 hidden w-11 h-11 rounded-full glass-panel border border-cyan-500/30 text-cyan-400 hover:text-white flex items-center justify-center hover:scale-110 active:scale-95 transition shadow-lg cursor-pointer" title="Back to Top" aria-label="Scroll Back to Top">
+    <i class="fa-solid fa-rocket"></i>
+  </button>
 
   <!-- Toast Notification Container -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
