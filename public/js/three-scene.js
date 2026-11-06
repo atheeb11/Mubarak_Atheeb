@@ -155,6 +155,17 @@
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
 
+  // Smooth 3D Scroll Journey & Parallax Inertia
+  let currentScrollY = window.pageYOffset || 0;
+  let targetScrollY = currentScrollY;
+  let scrollProgress = 0;
+
+  window.addEventListener('scroll', () => {
+    targetScrollY = window.pageYOffset || window.scrollY || 0;
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    scrollProgress = targetScrollY / maxScroll;
+  }, { passive: true });
+
   // Window Resize
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -174,30 +185,41 @@
     targetX += (mouseX - targetX) * 0.05;
     targetY += (mouseY - targetY) * 0.05;
 
-    // Rotate particle system
-    particleSystem.rotation.y = elapsedTime * 0.03 + targetX * 0.2;
-    particleSystem.rotation.x = targetY * 0.15;
+    // Smooth scroll inertia for 3D camera and geometry travel
+    currentScrollY += (targetScrollY - currentScrollY) * 0.08;
 
-    // Cyber core rotations
-    cyberCore.rotation.x = elapsedTime * 0.18 + targetY * 0.3;
-    cyberCore.rotation.y = elapsedTime * 0.22 + targetX * 0.4;
+    // 1. Dynamic 3D Camera Travel through Cyber Space
+    camera.position.y = -currentScrollY * 0.014;
+    camera.position.z = 35 + Math.sin(scrollProgress * Math.PI) * 8;
+    camera.rotation.z = Math.sin(scrollProgress * Math.PI * 2) * 0.04;
+
+    // 2. Parallax particle constellation
+    particleSystem.position.y = currentScrollY * 0.006;
+    particleSystem.rotation.y = elapsedTime * 0.03 + targetX * 0.2 + currentScrollY * 0.0003;
+    particleSystem.rotation.x = targetY * 0.15 + currentScrollY * 0.0002;
+
+    // 3. Cyber core rotations & vertical drift
+    cyberCore.position.y = -currentScrollY * 0.012;
+    cyberCore.rotation.x = elapsedTime * 0.18 + targetY * 0.3 + currentScrollY * 0.001;
+    cyberCore.rotation.y = elapsedTime * 0.22 + targetX * 0.4 + currentScrollY * 0.001;
     innerCore.rotation.x = -elapsedTime * 0.3;
     innerCore.rotation.z = elapsedTime * 0.2;
 
-    // Torus knot rotations
-    torusMesh.rotation.x = elapsedTime * 0.12;
+    // 4. Torus knot smooth scroll trajectory
+    torusMesh.rotation.x = elapsedTime * 0.12 + currentScrollY * 0.001;
     torusMesh.rotation.y = elapsedTime * 0.15;
-    torusMesh.position.y = -6 + Math.sin(elapsedTime * 0.8) * 1.5;
+    torusMesh.position.y = -6 - currentScrollY * 0.01 + Math.sin(elapsedTime * 0.8) * 1.5;
+    torusMesh.position.x = -18 + Math.cos(scrollProgress * Math.PI * 2) * 4;
 
-    // Dynamic point light tracking
+    // 5. Dynamic point light tracking
     cyanLight.position.x = 10 + targetX * 15;
-    cyanLight.position.y = 15 - targetY * 15;
+    cyanLight.position.y = 15 - targetY * 15 - currentScrollY * 0.014;
 
-    // Floating nodes animation
-    floatingNodes.forEach((node) => {
+    // 6. Floating nodes animation
+    floatingNodes.forEach((node, idx) => {
       node.rotation.x += node.userData.rotX;
       node.rotation.y += node.userData.rotY;
-      node.position.y = node.userData.initialY + Math.sin(elapsedTime * 1.2 + node.position.x) * 1.5;
+      node.position.y = node.userData.initialY - currentScrollY * (0.008 + idx * 0.002) + Math.sin(elapsedTime * 1.2 + node.position.x) * 1.5;
     });
 
     renderer.render(scene, camera);

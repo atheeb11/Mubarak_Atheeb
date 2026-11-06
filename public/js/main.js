@@ -253,6 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       projectsContainer.appendChild(card);
     });
+
+    initScrollReveals();
   }
 
   function loadFallbackProjects() {
@@ -670,16 +672,24 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     });
   }
 
-  // ================= 10. ACTIVE NAVBAR ON SCROLL =================
+  // ================= 10. ACTIVE NAVBAR & REAL-TIME SCROLL PROGRESS BAR =================
   const sections = document.querySelectorAll('section[id]');
   const navItems = document.querySelectorAll('.nav-item');
+  const scrollProgressBar = document.getElementById('scroll-progress-bar');
 
   window.addEventListener('scroll', () => {
     let current = '';
-    const scrollY = window.pageYOffset;
+    const scrollY = window.pageYOffset || window.scrollY || 0;
+
+    // Real-time Neon Cyber Scroll Progress Bar
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const scrollPercent = Math.min(100, Math.max(0, (scrollY / maxScroll) * 100));
+    if (scrollProgressBar) {
+      scrollProgressBar.style.width = `${scrollPercent}%`;
+    }
 
     sections.forEach(sec => {
-      const secTop = sec.offsetTop - 120;
+      const secTop = sec.offsetTop - 140;
       const secHeight = sec.offsetHeight;
       if (scrollY >= secTop && scrollY < secTop + secHeight) {
         current = sec.getAttribute('id');
@@ -692,7 +702,52 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
         item.classList.add('active');
       }
     });
-  });
+  }, { passive: true });
+
+  // ================= CINEMATIC SCROLL REVEAL INTERSECTION OBSERVER =================
+  const scrollRevealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          scrollRevealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    }
+  );
+
+  function initScrollReveals() {
+    const targetSelectors = [
+      '.section-tag',
+      '.section-heading',
+      '.section-subheading',
+      '.skill-3d-card',
+      '.project-card',
+      '.timeline-item',
+      '.honor-card',
+      '.terminal-window',
+      '.contact-info-card',
+      '#contact-form'
+    ];
+
+    targetSelectors.forEach((sel) => {
+      document.querySelectorAll(sel).forEach((el, idx) => {
+        if (!el.classList.contains('scroll-reveal')) {
+          el.classList.add('scroll-reveal');
+          const delayClass = `scroll-delay-${(idx % 5) + 1}`;
+          el.classList.add(delayClass);
+        }
+        scrollRevealObserver.observe(el);
+      });
+    });
+  }
+
+  // Initialize scroll reveals on startup
+  initScrollReveals();
 
   // ================= 11. RESUME & CV MODAL LOGIC =================
   const resumeModal = document.getElementById('resume-modal');
