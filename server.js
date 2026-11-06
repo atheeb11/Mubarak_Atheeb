@@ -1,10 +1,28 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Initialize Supabase if credentials are provided
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY;
+let supabase = null;
+
+if (SUPABASE_URL && SUPABASE_KEY) {
+  try {
+    supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('⚡ Connected to Supabase Cloud Database');
+  } catch (err) {
+    console.warn('Supabase initialization warning:', err.message);
+  }
+} else {
+  console.log('ℹ️  Supabase credentials not detected; using local storage fallback');
+}
 
 // Middleware
 app.use(cors());
@@ -82,12 +100,13 @@ app.get('/api/stats', (req, res) => {
     nodeVersion: process.version,
     messagesCount: messages.length,
     status: 'online',
+    database: supabase ? 'Supabase PostgreSQL (Connected)' : 'Local JSON Storage',
     serverTimestamp: new Date().toISOString()
   });
 });
 
-// POST /api/contact - Receive and save contact inquiries
-app.post('/api/contact', (req, res) => {
+// POST /api/contact - Receive and save contact inquiries (Supabase + Local fallback)
+app.post('/api/contact', async (req, res) => {
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !message) {
@@ -106,9 +125,6 @@ app.post('/api/contact', (req, res) => {
     });
   }
 
-  const messagesPath = path.join(__dirname, 'data', 'messages.json');
-  const messages = readJsonFile(messagesPath, []);
-
   const newEntry = {
     id: 'msg_' + Date.now(),
     name: name.trim(),
@@ -119,30 +135,87 @@ app.post('/api/contact', (req, res) => {
     ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
   };
 
+  let savedToSupabase = false;
+
+  // Insert to Supabase PostgreSQL table if client is initialized
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .insert([
+          {
+            name: newEntry.name,
+            email: newEntry.email,
+            subject: newEntry.subject,
+            message: newEntry.message,
+            received_at: newEntry.receivedAt,
+            ip: String(newEntry.ip || '')
+          }
+        ]);
+
+      if (error) {
+        console.warn('Supabase insert warning:', error.message);
+      } else {
+        savedToSupabase = true;
+      }
+    } catch (dbErr) {
+      console.warn('Supabase insert exception:', dbErr.message);
+    }
+  }
+
+  // Also write to local storage
+  const messagesPath = path.join(__dirname, 'data', 'messages.json');
+  const messages = readJsonFile(messagesPath, []);
   messages.push(newEntry);
   const saved = writeJsonFile(messagesPath, messages);
 
-  if (!saved) {
+  if (!saved && !savedToSupabase) {
     return res.status(500).json({
       success: false,
       error: 'Could not persist message to storage. Please try again or email directly.'
     });
   }
 
-  console.log(`[Contact Form] New message received from ${newEntry.name} (${newEntry.email})`);
+  console.log(`[Contact Form] New message from ${newEntry.name} (${newEntry.email})${savedToSupabase ? ' [Stored in Supabase PostgreSQL]' : ''}`);
 
   res.status(201).json({
     success: true,
     message: 'Thank you! Your message has been sent successfully. Mubarak Atheeb will get back to you shortly.',
     data: {
       id: newEntry.id,
-      receivedAt: newEntry.receivedAt
+      receivedAt: newEntry.receivedAt,
+      storage: savedToSupabase ? 'supabase' : 'local'
     }
   });
 });
 
-// GET /api/messages - List contact messages (for review)
-app.get('/api/messages', (req, res) => {
+// GET /api/messages - List contact messages (Supabase or Local fallback)
+app.get('/api/messages', async (req, res) => {
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .order('received_at', { ascending: false })
+        .limit(50);
+
+      if (!error && data && data.length > 0) {
+        const formatted = data.map(m => ({
+          id: m.id,
+          name: m.name,
+          email: m.email,
+          subject: m.subject,
+          message: m.message,
+          receivedAt: m.received_at,
+          ip: m.ip
+        }));
+        return res.json(formatted);
+      }
+    } catch (err) {
+      console.warn('Supabase fetch error, using local fallback:', err.message);
+    }
+  }
+
   const messagesPath = path.join(__dirname, 'data', 'messages.json');
   const messages = readJsonFile(messagesPath, []);
   res.json(messages);
