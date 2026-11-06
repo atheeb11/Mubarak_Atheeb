@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "msg_1793985517343",
+    "name": "Alexander Vance",
+    "email": "alex.vance@techcorp.io",
+    "subject": "Cloud & AI Project Collaboration",
+    "message": "Hello Mubarak! We were very impressed by your 3D portfolio and your AWS leadership work. We would like to discuss an opportunity with our engineering team.",
+    "receivedAt": "2026-11-06T17:18:37.343Z",
+    "ip": "::1"
+  }
+]
