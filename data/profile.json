@@ -146,7 +146,7 @@
       "category": "Web",
       "desc": "A boutique digital agency portal offering interactive web design, modern brand architecture, and performance-tuned web applications.",
       "tech": ["HTML5", "CSS3 / SCSS", "JavaScript", "Express.js", "Three.js"],
-      "image": "/images/project-inkbit.png",
+      "image": "/images/project-inkbit.svg",
       "github": "https://github.com/atheeb11",
       "featured": true
     },
@@ -156,7 +156,7 @@
       "category": "AI / Data",
       "desc": "Intelligent automated reporting pipeline built with Python and ReportLab to generate dynamic analytical PDF dashboards from database queries.",
       "tech": ["Python", "ReportLab", "MySQL", "Data Analytics"],
-      "image": "/images/project-analytics.png",
+      "image": "/images/project-analytics.svg",
       "github": "https://github.com/atheeb11",
       "featured": true
     },
@@ -166,7 +166,7 @@
       "category": "Systems",
       "desc": "System diagnostics protocol documentation and automated recovery tooling suite developed during 3+ years of professional PC servicing.",
       "tech": ["Hardware Architecture", "OS Deployment", "Data Recovery", "Shell Scripting"],
-      "image": "/images/project-hardware.png",
+      "image": "/images/project-hardware.svg",
       "github": "https://github.com/atheeb11",
       "featured": true
     },
@@ -176,7 +176,7 @@
       "category": "Web",
       "desc": "Multi-channel content scheduling and performance metrics monitoring pipeline delivering consistent growth across student recruitment channels.",
       "tech": ["Social Analytics", "WordPress", "JavaScript", "SEO"],
-      "image": "/images/project-harvest.png",
+      "image": "/images/project-harvest.svg",
       "github": "https://github.com/atheeb11",
       "featured": false
     },
@@ -186,7 +186,7 @@
       "category": "AI / Data",
       "desc": "Supervised and unsupervised machine learning pipelines implementing classification, regression, and data preprocessing for real-world datasets.",
       "tech": ["Python", "Scikit-Learn", "NumPy", "Pandas"],
-      "image": "/images/project-ml.png",
+      "image": "/images/project-ml.svg",
       "github": "https://github.com/atheeb11",
       "featured": false
     },
@@ -196,7 +196,7 @@
       "category": "Web",
       "desc": "Immersive 3D interactive portfolio featuring custom Three.js WebGL particle constellations, Express.js backend API, and interactive terminal.",
       "tech": ["Three.js", "Express.js", "WebGL", "GSAP"],
-      "image": "/images/project-portfolio.png",
+      "image": "/images/project-portfolio.svg",
       "github": "https://github.com/atheeb11",
       "featured": true
     }
