@@ -24,6 +24,67 @@ if (SUPABASE_URL && SUPABASE_KEY) {
   console.log('ℹ️  Supabase credentials not detected; using local storage fallback');
 }
 
+// Telegram Bot Notification Settings
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+  console.log('⚡ Telegram Bot Notification Dispatcher: ACTIVE');
+} else {
+  console.log('ℹ️  Telegram credentials not detected (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)');
+}
+
+// Helper to send instant notification via Telegram Bot API
+async function sendTelegramNotification(entry) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    return false;
+  }
+
+  const escapeHtml = (str) =>
+    String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+  const text = [
+    `📬 <b>New Portfolio Message!</b>`,
+    ``,
+    `👤 <b>Name:</b> ${escapeHtml(entry.name)}`,
+    `📧 <b>Email:</b> <code>${escapeHtml(entry.email)}</code>`,
+    `📌 <b>Subject:</b> ${escapeHtml(entry.subject)}`,
+    ``,
+    `💬 <b>Message:</b>`,
+    `${escapeHtml(entry.message)}`,
+    ``,
+    `🕒 <b>Received:</b> ${new Date(entry.receivedAt).toLocaleString()}`,
+    `🌐 <b>IP:</b> <code>${escapeHtml(entry.ip || 'Unknown')}</code>`
+  ].join('\n');
+
+  try {
+    const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    const response = await fetch(telegramUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: text,
+        parse_mode: 'HTML'
+      })
+    });
+
+    const result = await response.json();
+    if (result.ok) {
+      console.log(`[Telegram] Message forwarded successfully to chat ${TELEGRAM_CHAT_ID}`);
+      return true;
+    } else {
+      console.warn('[Telegram] API error:', result.description);
+      return false;
+    }
+  } catch (err) {
+    console.warn('[Telegram] Network dispatch error:', err.message);
+    return false;
+  }
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -101,6 +162,7 @@ app.get('/api/stats', (req, res) => {
     messagesCount: messages.length,
     status: 'online',
     database: supabase ? 'Supabase PostgreSQL (Connected)' : 'Local JSON Storage',
+    telegramEnabled: Boolean(TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID),
     serverTimestamp: new Date().toISOString()
   });
 });
@@ -176,7 +238,10 @@ app.post('/api/contact', async (req, res) => {
     });
   }
 
-  console.log(`[Contact Form] New message from ${newEntry.name} (${newEntry.email})${savedToSupabase ? ' [Stored in Supabase PostgreSQL]' : ''}`);
+  // Send instant Telegram notification to Mubarak
+  const sentTelegram = await sendTelegramNotification(newEntry);
+
+  console.log(`[Contact Form] New message from ${newEntry.name} (${newEntry.email})${savedToSupabase ? ' [Supabase]' : ''}${sentTelegram ? ' [Telegram Notified]' : ''}`);
 
   res.status(201).json({
     success: true,
@@ -184,7 +249,8 @@ app.post('/api/contact', async (req, res) => {
     data: {
       id: newEntry.id,
       receivedAt: newEntry.receivedAt,
-      storage: savedToSupabase ? 'supabase' : 'local'
+      storage: savedToSupabase ? 'supabase' : 'local',
+      telegramNotified: sentTelegram
     }
   });
 });
