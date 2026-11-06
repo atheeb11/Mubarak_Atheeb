@@ -1,13 +1,14 @@
 {
   "name": "Mubarak Atheeb",
   "heroTitle": "Mubarak Atheeb",
-  "tagline": "Informatics Engineering Student | Founder, InkBit Digital Studio",
+  "tagline": "Informatics Engineering Student | AWS Leader | Ambassador",
   "titles": [
     "Informatics Engineering Student",
-    "Founder @ InkBit Digital Studio",
-    "Full-Stack Web Developer",
-    "AI & Data Analytics Enthusiast",
-    "Hardware & Systems Specialist"
+    "AWS Student Builder Community Leader",
+    "President @ AWS Club Nusa Putra",
+    "Ambassador, One World Youth Movements",
+    "Ambassador, International Diplomats",
+    "Founder @ InkBit Digital Studio"
   ],
   "about": "First-year Informatics Engineering student at Universitas Nusa Putra, Sukabumi, Indonesia (Student ID: 20250040223), and Founder & Web Designer at InkBit Digital Studio. Currently serving as Social Media Manager at Harvest International Business College. Experienced in web development, Python programming, database management, and hardware support. Passionate about AI, cybersecurity, and software engineering, with a strong record of leadership, volunteering, and international programme participation.",
   "location": "Sukabumi, Indonesia",
@@ -124,9 +125,10 @@
     { "title": "GCE Ordinary Level (O/L)", "issuer": "Department of Examinations", "year": "2021", "badge": "Academic" }
   ],
   "leadership": [
-    { "title": "AWS Student Builder Community Leader", "org": "AWS", "desc": "Leading cloud and architectural initiatives for student builders." },
-    { "title": "One World Youth Movement Ambassador", "org": "One World Youth Movement", "desc": "Representing international youth leadership, empowerment, and global dialogue." },
-    { "title": "International Diplomats Ambassador", "org": "International Diplomats", "desc": "Advocating for international collaboration, youth diplomacy, and technological innovation." },
+    { "title": "AWS Student Builder Community Leader", "org": "Amazon Web Services (AWS)", "desc": "Leading cloud workshops, developer architecture sessions, and student builder empowerment." },
+    { "title": "President, AWS Student Builder Club", "org": "Universitas Nusa Putra", "desc": "Presiding over university tech initiatives, student cloud workshops, and developer meetups." },
+    { "title": "Ambassador, One World Youth Movements", "org": "One World Youth Movements (OWYM)", "desc": "Representing international youth leadership, empowerment, and global cross-cultural dialogue." },
+    { "title": "Ambassador, International Diplomats", "org": "International Diplomats", "desc": "Advocating for international collaboration, youth diplomacy, and technological innovation." },
     { "title": "Founder & Lead", "org": "InkBit Digital Studio", "desc": "Leading web design and brand engineering projects." },
     { "title": "Scholarship Awardee", "org": "Universitas Nusa Putra", "desc": "Recognized for academic merit and potential in Informatics Engineering." },
     { "title": "Senior Prefect", "org": "KMKM Imam Gazzaly Maha Vidyalaya", "desc": "Demonstrated discipline, school leadership, and student administration." },

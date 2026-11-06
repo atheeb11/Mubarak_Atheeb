@@ -524,20 +524,38 @@ body {
 }
 
 .badge-top-left {
-  top: 10%;
-  left: -8%;
+  top: 6%;
+  left: -12%;
 }
 
 .badge-top-right {
-  top: 18%;
-  right: -10%;
-  animation-delay: -1.5s;
+  top: 8%;
+  right: -14%;
+  animation-delay: -1.2s;
+}
+
+.badge-mid-left {
+  top: 40%;
+  left: -14%;
+  animation-delay: -2.4s;
+}
+
+.badge-mid-right {
+  top: 42%;
+  right: -14%;
+  animation-delay: -3.2s;
 }
 
 .badge-bottom-right {
-  bottom: 18%;
-  right: -6%;
-  animation-delay: -3s;
+  bottom: 12%;
+  right: -10%;
+  animation-delay: -1.8s;
+}
+
+.badge-bottom-left {
+  bottom: 12%;
+  left: -10%;
+  animation-delay: -2.8s;
 }
 
 @keyframes floatBounce {

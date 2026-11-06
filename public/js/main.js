@@ -82,10 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const typewriterEl = document.getElementById('typewriter-text');
   const roles = [
     'Informatics Engineering Student',
+    'AWS Student Builder Community Leader',
+    'President, AWS Student Builder Club @ Nusa Putra',
+    'Ambassador, One World Youth Movements',
+    'Ambassador, International Diplomats',
     'Founder @ InkBit Digital Studio',
-    'Full-Stack Web Developer',
-    'AI & Machine Learning Explorer',
-    'Hardware & Systems Specialist'
+    'Full-Stack Developer & AI Explorer'
   ];
 
   let roleIdx = 0;
@@ -351,6 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const terminalCommands = {
     help: () => `Available Terminal Commands:
   • about        : Summary biography & university status
+  • leadership   : AWS Builder & Global Ambassador leadership roles
   • skills       : Core technical skills breakdown
   • projects     : Featured studio & engineering projects
   • experience   : Career history (InkBit, Harvest, BSC)
@@ -367,8 +370,25 @@ document.addEventListener('DOMContentLoaded', () => {
     about: () => `MUBARAK ATHEEB
 First-year Informatics Engineering student at Universitas Nusa Putra (Student ID: 20250040223).
 Founder & Web Designer at InkBit Digital Studio (Sukabumi, Indonesia).
+AWS Student Builder Community Leader & Global Ambassador.
 Specializes in responsive web applications, Python automation, and machine learning models.
 Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
+
+    leadership: () => `HONORARY & COMMUNITY LEADERSHIP POSITIONS:
+  ⚡ AWS Student Builder Community Leader
+     • Amazon Web Services (AWS) Student Community
+     • Leading developer cloud workshops, architecture sessions & hackathons
+  👑 President — AWS Student Builder Club
+     • Universitas Nusa Putra (Sukabumi, Indonesia)
+     • Presiding over university tech initiatives & student cloud empowerment
+  🌐 Global Ambassador — One World Youth Movements (OWYM)
+     • Cross-cultural youth empowerment & international diplomatic dialogue
+  🤝 Global Ambassador — International Diplomats
+     • Global youth leadership, technological literacy & international summits`,
+
+    aws: () => terminalCommands.leadership(),
+    roles: () => terminalCommands.leadership(),
+    ambassador: () => terminalCommands.leadership(),
 
     skills: () => `TECHNICAL SKILLS INVENTORY:
   [Frontend]   HTML5, CSS3, JavaScript (ES6+), Three.js, Responsive Design
