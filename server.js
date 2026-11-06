@@ -15,10 +15,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Helper to read JSON data safely
+let memoryMessages = [];
+
 function readJsonFile(filePath, defaultData = {}) {
   try {
     if (fs.existsSync(filePath)) {
       const raw = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(raw);
+    }
+    const tmpPath = path.join('/tmp', path.basename(filePath));
+    if (fs.existsSync(tmpPath)) {
+      const raw = fs.readFileSync(tmpPath, 'utf8');
       return JSON.parse(raw);
     }
   } catch (err) {
@@ -27,14 +34,21 @@ function readJsonFile(filePath, defaultData = {}) {
   return defaultData;
 }
 
-// Helper to write JSON data safely
+// Helper to write JSON data safely (handles Vercel read-only filesystem via /tmp)
 function writeJsonFile(filePath, data) {
   try {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (err) {
-    console.error(`Error writing ${filePath}:`, err.message);
-    return false;
+    console.warn(`Write to ${filePath} failed (${err.message}), attempting /tmp fallback...`);
+    try {
+      const tmpPath = path.join('/tmp', path.basename(filePath));
+      fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2), 'utf8');
+      return true;
+    } catch (tmpErr) {
+      memoryMessages = data;
+      return true;
+    }
   }
 }
 
@@ -169,10 +183,15 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start Express Server
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`🚀 Mubarak Atheeb 3D Portfolio running on Express.js`);
-  console.log(`🌐 Local URL: http://localhost:${PORT}`);
-  console.log(`====================================================`);
-});
+// Start Express Server (only when run directly or locally, not when imported as Vercel serverless function)
+if (require.main === module || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(`🚀 Mubarak Atheeb 3D Portfolio running on Express.js`);
+    console.log(`🌐 Local URL: http://localhost:${PORT}`);
+    console.log(`====================================================`);
+  });
+}
+
+// Export for Vercel Serverless Function deployment
+module.exports = app;
