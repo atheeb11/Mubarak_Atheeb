@@ -1129,41 +1129,127 @@ body {
   font-weight: 700;
 }
 
+/* ================= ADVANCED CYBER PROJECT CARDS ================= */
 .project-card {
   border-radius: 1.25rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-glass);
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
   display: flex;
-  flex-col: column;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.35s ease;
   position: relative;
 }
 
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
 .project-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8),
-              0 0 30px -5px rgba(6, 182, 212, 0.2);
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85),
+              0 0 30px -5px rgba(6, 182, 212, 0.25);
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 .project-thumbnail {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 215px;
   overflow: hidden;
-  background: #0f172a;
+  background: #090d16;
 }
 
 .project-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
 }
 
 .project-card:hover .project-img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  filter: brightness(1.05);
+}
+
+/* Quick Action Overlay on Thumbnail Hover */
+.project-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 18, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.project-card:hover .project-thumb-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.thumb-action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.thumb-action-btn:hover {
+  background: var(--neon-cyan);
+  color: #040812;
+  transform: scale(1.15);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.7);
+}
+
+.project-status-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(6, 9, 19, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
 }
 
 .project-category-tag {
@@ -1175,10 +1261,26 @@ body {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 6px;
-  background: rgba(6, 9, 19, 0.85);
+  background: rgba(6, 9, 19, 0.88);
   backdrop-filter: blur(8px);
   border: 1px solid var(--border-glass);
   color: var(--neon-cyan);
+  z-index: 5;
+}
+
+.filter-count {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  margin-left: 4px;
+}
+
+.filter-btn.active .filter-count {
+  background: rgba(0, 242, 254, 0.25);
+  color: #ffffff;
 }
 
 .tech-tag {

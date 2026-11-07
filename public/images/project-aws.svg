@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgAws" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#141e33" />
+      <stop offset="100%" stop-color="#23180c" />
+    </linearGradient>
+    <linearGradient id="awsOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9900" />
+      <stop offset="100%" stop-color="#ffb84d" />
+    </linearGradient>
+    <linearGradient id="cyanAws" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bgAws)" />
+  <g opacity="0.12">
+    <circle cx="200" cy="150" r="220" fill="#ff9900" />
+    <circle cx="650" cy="380" r="240" fill="#00f2fe" />
+  </g>
+  <!-- Architectural Console Window -->
+  <rect x="60" y="50" width="680" height="400" rx="16" fill="#090d16" stroke="rgba(255,153,0,0.3)" stroke-width="2" />
+  <circle cx="90" cy="75" r="6" fill="#ef4444" />
+  <circle cx="110" cy="75" r="6" fill="#eab308" />
+  <circle cx="130" cy="75" r="6" fill="#22c55e" />
+  <rect x="160" y="65" width="450" height="20" rx="6" fill="#1e293b" />
+  <text x="180" y="79" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="11">aws.amazon.com / student-builders / nusaputra-chapter</text>
+  
+  <!-- Left Side: Titles -->
+  <text x="100" y="160" fill="url(#awsOrange)" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="13" letter-spacing="2">AWS STUDENT BUILDER COMMUNITY</text>
+  <text x="100" y="205" fill="#ffffff" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="32">Cloud Architecture Labs</text>
+  <text x="100" y="240" fill="#94a3b8" font-family="'Segoe UI', sans-serif" font-size="15">Serverless Pipelines, Cloud Security &amp; Builder Workshops</text>
+  
+  <rect x="100" y="265" width="130" height="34" rx="6" fill="rgba(255,153,0,0.15)" stroke="#ff9900" stroke-width="1.2" />
+  <text x="116" y="287" fill="#ff9900" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="12">COMMUNITY</text>
+  
+  <rect x="245" y="265" width="120" height="34" rx="6" fill="rgba(0,242,254,0.15)" stroke="#00f2fe" stroke-width="1.2" />
+  <text x="265" y="287" fill="#00f2fe" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="12">HANDS-ON</text>
+
+  <!-- Right Side: Cloud Infrastructure Topology Mockup -->
+  <rect x="420" y="125" width="280" height="280" rx="12" fill="#0d1424" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" />
+  <!-- Nodes & Connectors -->
+  <circle cx="500" cy="185" r="24" fill="rgba(255,153,0,0.2)" stroke="#ff9900" stroke-width="2" />
+  <text x="488" y="191" fill="#ff9900" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="13">EC2</text>
+  
+  <line x1="524" y1="185" x2="600" y2="185" stroke="#ff9900" stroke-width="2" stroke-dasharray="4" />
+  
+  <circle cx="624" cy="185" r="24" fill="rgba(0,242,254,0.2)" stroke="#00f2fe" stroke-width="2" />
+  <text x="614" y="191" fill="#00f2fe" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="13">S3</text>
+  
+  <line x1="500" y1="209" x2="560" y2="280" stroke="#3b82f6" stroke-width="2" />
+  
+  <circle cx="560" cy="300" r="24" fill="rgba(157,78,221,0.2)" stroke="#9d4edd" stroke-width="2" />
+  <text x="548" y="306" fill="#9d4edd" font-family="'Segoe UI', sans-serif" font-weight="bold" font-size="12">IAM</text>
+  
+  <rect x="445" y="355" width="230" height="24" rx="6" fill="#17223b" />
+  <text x="465" y="371" fill="#38bdf8" font-family="'Courier New', monospace" font-size="10">Active Cluster: ap-southeast-3</text>
+</svg>

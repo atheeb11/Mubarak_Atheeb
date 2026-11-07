@@ -220,34 +220,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
     projects.forEach(p => {
       const card = document.createElement('div');
-      card.className = 'project-card flex flex-col justify-between';
+      card.className = 'project-card flex flex-col justify-between group';
       card.setAttribute('data-category', p.category);
 
       const techBadges = p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('');
 
+      // Status indicator style
+      let statusColor = 'text-emerald-400 bg-emerald-950/80 border-emerald-500/30';
+      let statusDot = 'bg-emerald-400';
+      if (p.status?.includes('AWS') || p.status?.includes('Systems')) {
+        statusColor = 'text-amber-400 bg-amber-950/80 border-amber-500/30';
+        statusDot = 'bg-amber-400';
+      } else if (p.status?.includes('Flagship') || p.status?.includes('Agency')) {
+        statusColor = 'text-cyan-400 bg-cyan-950/80 border-cyan-500/30';
+        statusDot = 'bg-cyan-400';
+      } else if (p.status?.includes('AI') || p.status?.includes('Diploma')) {
+        statusColor = 'text-purple-400 bg-purple-950/80 border-purple-500/30';
+        statusDot = 'bg-purple-400';
+      }
+
       card.innerHTML = `
         <div>
+          <!-- Thumbnail Container with Quick Action Overlay -->
           <div class="project-thumbnail">
             <img src="${p.image}" alt="${p.title}" class="project-img" loading="lazy">
+            
+            <div class="project-status-tag ${statusColor}">
+              <span class="w-1.5 h-1.5 rounded-full ${statusDot} animate-pulse"></span>
+              <span>${p.status || 'Active Project'}</span>
+            </div>
+
             <span class="project-category-tag">${p.category}</span>
+
+            <!-- Quick Action Overlay on Hover -->
+            <div class="project-thumb-overlay">
+              <button class="thumb-action-btn project-details-btn" data-project-id="${p.id}" title="Inspect Architecture & Specs">
+                <i class="fa-solid fa-layer-group"></i>
+              </button>
+              <a href="${p.github || 'https://github.com/atheeb11'}" target="_blank" rel="noopener noreferrer" class="thumb-action-btn" title="View Source Code on GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
           </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-white mb-2">${p.title}</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-4">${p.desc}</p>
-            <div class="flex flex-wrap gap-2 mb-4">
+
+          <!-- Card Content -->
+          <div class="p-6 sm:p-7">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-cyan-400/90">${p.subtitle || p.role || 'Full-Stack Solution'}</span>
+              ${p.featured ? '<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 font-bold"><i class="fa-solid fa-star text-[9px] mr-1"></i>Featured</span>' : ''}
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-cyan transition-colors duration-200">${p.title}</h3>
+            
+            <p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">${p.desc}</p>
+            
+            ${p.metrics ? `
+            <div class="flex items-center gap-2 text-xs font-mono text-emerald-300/90 bg-emerald-950/40 border border-emerald-500/20 px-3 py-1.5 rounded-lg mb-4">
+              <i class="fa-solid fa-gauge-high text-emerald-400 text-[11px]"></i>
+              <span class="truncate">${p.metrics}</span>
+            </div>` : ''}
+
+            <div class="flex flex-wrap gap-1.5 pt-1 mb-2">
               ${techBadges}
             </div>
           </div>
         </div>
-        <div class="px-6 pb-6 pt-2 flex items-center justify-between border-t border-slate-800/80">
-          <button class="project-details-btn text-xs font-mono text-cyan-400 hover:text-white flex items-center gap-1.5 transition cursor-pointer" data-project-id="${p.id}">
+
+        <!-- Footer Actions -->
+        <div class="px-6 py-4 border-t border-slate-800/80 bg-slate-950/40 flex items-center justify-between">
+          <button class="project-details-btn text-xs font-mono font-semibold text-cyan-400 hover:text-white flex items-center gap-1.5 transition cursor-pointer" data-project-id="${p.id}">
             <i class="fa-solid fa-circle-info text-sm"></i>
-            <span>Architecture &amp; Details</span>
+            <span>Architecture &amp; Specs</span>
+            <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
           </button>
-          <a href="${p.github || 'https://github.com/atheeb11'}" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-400 hover:text-neon-cyan flex items-center gap-1 transition">
-            <i class="fa-brands fa-github"></i>
-            <span>Source</span>
-          </a>
+          
+          <div class="flex items-center gap-3">
+            <a href="${p.github || 'https://github.com/atheeb11'}" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-slate-400 hover:text-white flex items-center gap-1.5 transition" title="GitHub Repository">
+              <i class="fa-brands fa-github text-sm"></i>
+              <span>Code</span>
+            </a>
+          </div>
         </div>
       `;
 
@@ -793,33 +845,75 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     if (!project || !projectModalContent) return;
 
     const techBadges = project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('');
+    const highlights = project.highlights ? project.highlights.map(h => `
+      <li class="flex items-start gap-2.5 text-xs text-slate-300">
+        <i class="fa-solid fa-circle-check text-cyan-400 mt-0.5 text-xs"></i>
+        <span>${h}</span>
+      </li>
+    `).join('') : '';
 
     projectModalContent.innerHTML = `
-      <div class="relative">
-        <img src="${project.image}" alt="${project.title}" class="w-full h-56 object-cover bg-slate-950">
-        <button id="close-project-btn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-950/80 text-white flex items-center justify-center hover:bg-slate-900 transition">
+      <div class="relative bg-slate-950">
+        <img src="${project.image}" alt="${project.title}" class="w-full h-60 sm:h-72 object-cover">
+        <button id="close-project-btn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-950/80 text-white flex items-center justify-center hover:bg-slate-900 transition border border-slate-700/60 shadow-lg cursor-pointer">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
-        <span class="project-category-tag">${project.category}</span>
+        <div class="absolute bottom-4 left-6 flex items-center gap-2">
+          <span class="text-xs font-mono font-bold px-3 py-1 rounded bg-slate-900/90 text-cyan-400 border border-cyan-500/30 backdrop-blur-md">${project.category}</span>
+          ${project.status ? `<span class="text-xs font-mono font-semibold px-3 py-1 rounded bg-slate-900/90 text-emerald-400 border border-emerald-500/30 backdrop-blur-md flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>${project.status}</span>` : ''}
+        </div>
       </div>
-      <div class="p-6 sm:p-8 space-y-4 text-slate-200">
-        <h3 class="text-2xl font-bold text-white">${project.title}</h3>
-        <p class="text-slate-300 text-sm leading-relaxed">${project.desc}</p>
-        
-        <div class="pt-2">
-          <h4 class="text-xs font-mono font-bold uppercase text-slate-400 mb-2">Architectural Tech Stack:</h4>
+      
+      <div class="p-6 sm:p-8 space-y-5 text-slate-200 max-h-[70vh] overflow-y-auto">
+        <div>
+          <div class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider mb-1">${project.subtitle || project.role || 'Full-Stack Solution'}</div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white">${project.title}</h3>
+          ${project.role ? `<div class="text-xs text-slate-400 mt-1.5"><i class="fa-solid fa-user-gear mr-1.5 text-slate-500"></i>Role: <strong class="text-slate-300">${project.role}</strong></div>` : ''}
+        </div>
+
+        <div>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-2 border-b border-slate-800 pb-1">System Overview</h4>
+          <p class="text-slate-300 text-sm leading-relaxed">${project.desc}</p>
+        </div>
+
+        ${project.metrics ? `
+        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-gauge-high"></i>
+          </div>
+          <div>
+            <div class="text-[10px] uppercase font-mono text-slate-400 tracking-wider">Performance &amp; Key Metrics</div>
+            <div class="text-xs font-mono font-bold text-emerald-400">${project.metrics}</div>
+          </div>
+        </div>
+        ` : ''}
+
+        ${highlights ? `
+        <div>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-2 border-b border-slate-800 pb-1">Key Engineering Highlights</h4>
+          <ul class="space-y-2">
+            ${highlights}
+          </ul>
+        </div>
+        ` : ''}
+
+        <div>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-2 border-b border-slate-800 pb-1">Architecture &amp; Tech Stack</h4>
           <div class="flex flex-wrap gap-2">
             ${techBadges}
           </div>
         </div>
 
-        <div class="pt-6 border-t border-slate-800 flex items-center justify-between">
-          <a href="${project.github || 'https://github.com/atheeb11'}" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs py-2.5 px-5">
-            <i class="fa-brands fa-github mr-2"></i>
-            <span>GitHub Repository</span>
-          </a>
-          <button id="modal-inquire-btn" class="btn-outline text-xs py-2.5 px-5">
-            <i class="fa-solid fa-envelope mr-2"></i>
+        <div class="pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <a href="${project.github || 'https://github.com/atheeb11'}" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs py-2.5 px-5">
+              <i class="fa-brands fa-github mr-2"></i>
+              <span>GitHub Repository</span>
+            </a>
+          </div>
+
+          <button id="modal-inquire-btn" class="btn-outline text-xs py-2.5 px-4 text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10 flex items-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i>
             <span>Inquire About Project</span>
           </button>
         </div>
@@ -833,7 +927,15 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     document.getElementById('close-project-btn')?.addEventListener('click', closeProjectModal);
     document.getElementById('modal-inquire-btn')?.addEventListener('click', () => {
       closeProjectModal();
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      const contactSec = document.getElementById('contact');
+      if (contactSec) {
+        contactSec.scrollIntoView({ behavior: 'smooth' });
+        const subjectInput = document.getElementById('form-subject');
+        if (subjectInput) {
+          subjectInput.value = `Project Inquiry: ${project.title}`;
+          subjectInput.focus();
+        }
+      }
     });
   }
 
