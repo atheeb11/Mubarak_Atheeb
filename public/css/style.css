@@ -1389,73 +1389,288 @@ body {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* Responsive adjustments */
+/* ================= MOBILE OPTIMIZATION & RESPONSIVE UX ================= */
+.mobile-leadership-grid {
+  width: 100%;
+}
+
+.mobile-badge-card {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mobile-badge-card:hover, .mobile-badge-card:active {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.6);
+}
+
+.term-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--neon-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.term-chip:hover, .term-chip:active {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--neon-cyan);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 768px) {
-  .character-3d-stage {
-    height: 440px;
-  }
-  .character-cutout-img {
-    height: 400px;
-  }
-  .holo-energy-aura {
-    width: 280px;
-    height: 320px;
-  }
-  .holo-pedestal-light {
-    width: 220px;
-  }
-  .floating-badge {
-    padding: 6px 10px;
+  /* Quick floating controls: position horizontally under navbar */
+  .quick-controls {
+    top: 5rem;
+    right: 1rem;
+    flex-direction: row;
     gap: 8px;
-    border-radius: 10px;
+    background: rgba(6, 9, 19, 0.85);
+    padding: 6px 10px;
+    border-radius: 9999px;
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
   }
-  .floating-badge .text-xs {
-    font-size: 11px;
+
+  .control-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+    box-shadow: none;
   }
-  .badge-top-left {
-    top: 2%;
-    left: -4%;
+
+  .btn-tooltip {
+    display: none !important;
   }
-  .badge-top-right {
-    top: 8%;
-    right: -4%;
+
+  /* 3D Character Stage on Mobile */
+  .character-3d-stage {
+    height: 380px;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
   }
-  .badge-mid-left {
-    top: 38%;
-    left: -6%;
+
+  .character-cutout-img {
+    height: 340px;
   }
-  .badge-mid-right {
-    top: 42%;
-    right: -6%;
+
+  .holo-energy-aura {
+    width: 240px;
+    height: 270px;
   }
-  .badge-bottom-left {
-    bottom: 8%;
-    left: -2%;
+
+  .holo-pedestal-light {
+    width: 200px;
   }
-  .badge-bottom-right {
-    display: none;
+
+  /* Floating orbit badges: hidden on mobile in favor of .mobile-leadership-grid */
+  .floating-badge {
+    display: none !important;
   }
+
   .holo-orbit-ring {
+    display: none !important;
+  }
+
+  .floating-identity-capsule {
+    bottom: 6px;
+    font-size: 11px;
+    padding: 3px 12px;
+  }
+
+  /* Typography & Layout Spacing */
+  .hero-section {
+    padding-top: 6.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.1rem, 7.5vw, 3.2rem) !important;
+    line-height: 1.15;
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .status-badge {
+    max-width: 100%;
+    flex-wrap: wrap;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .express-badge {
+    margin-left: 0;
+    margin-top: 2px;
+  }
+
+  /* Hero CTA Buttons */
+  .hero-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary,
+  .hero-actions .btn-outline {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    justify-content: center;
+  }
+
+  /* Section Spacing */
+  .section-wrapper {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-heading {
+    font-size: 2rem !important;
+  }
+
+  .section-subheading {
+    font-size: 0.9rem;
+  }
+
+  /* Terminal */
+  .terminal-body {
+    height: 250px;
+    font-size: 0.78rem;
+    padding: 1rem;
+  }
+
+  .terminal-title {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Project Filters (Smooth horizontal touch scrolling) */
+  .project-filters {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .project-filters::-webkit-scrollbar {
     display: none;
+  }
+
+  .filter-btn {
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  /* Skill Category Filters */
+  .skill-category-filters {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    padding: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .skill-category-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skill-tab-btn {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  /* Form Inputs (prevent iOS Safari zoom) */
+  .form-input {
+    font-size: 16px !important;
+    padding: 12px 14px;
+  }
+
+  /* Floating WhatsApp & Back to Top */
+  .whatsapp-float-btn {
+    bottom: 1rem !important;
+    left: 1rem !important;
+    padding: 10px 14px !important;
+  }
+
+  #back-to-top {
+    bottom: 5.5rem !important;
+    right: 1rem !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  /* Modals */
+  .resume-modal-dialog {
+    max-height: 94vh;
+    border-radius: 1rem;
+    width: 96vw;
+    margin: auto;
+  }
+
+  .resume-modal-body {
+    padding: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  #project-modal-content {
+    width: 96vw;
+    max-height: 92vh;
+    margin: auto;
+    border-radius: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .badge-mid-left,
-  .badge-mid-right {
-    display: none;
+  .hero-actions {
+    grid-template-columns: 1fr;
   }
-  .badge-top-left {
-    top: 1%;
-    left: -2%;
+
+  .character-3d-stage {
+    height: 330px;
+    max-width: 290px;
   }
-  .badge-top-right {
-    top: 7%;
-    right: -2%;
+
+  .character-cutout-img {
+    height: 300px;
   }
-  .badge-bottom-left {
-    bottom: 6%;
-    left: 0;
+
+  .holo-energy-aura {
+    width: 200px;
+    height: 230px;
+  }
+
+  .hero-title {
+    font-size: 1.95rem !important;
+  }
+
+  .quick-controls {
+    right: 0.75rem;
+    top: 4.75rem;
   }
 }
 

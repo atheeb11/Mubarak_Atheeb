@@ -155,6 +155,13 @@
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
 
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 1.5;
+      mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 1.5;
+    }
+  }, { passive: true });
+
   // Smooth 3D Scroll Journey & Parallax Inertia
   let currentScrollY = window.pageYOffset || 0;
   let targetScrollY = currentScrollY;

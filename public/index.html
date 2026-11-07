@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>Mubarak Atheeb | 3D Interactive Portfolio & Informatics Engineer</title>
   <meta name="description" content="Portfolio of Mubarak Atheeb — Informatics Engineering Student, Founder at InkBit Digital Studio, Full-Stack Developer, and AI Enthusiast.">
   <link rel="icon" type="image/png" href="/images/mubarak-atheeb.png">
@@ -274,6 +274,45 @@
             </div>
 
           </div>
+
+          <!-- Mobile Leadership Matrix (Visible on Mobile & Tablet Screens) -->
+          <div class="mobile-leadership-grid lg:hidden w-full mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="mobile-badge-card flex items-center gap-3 p-3 rounded-xl bg-slate-900/80 border border-amber-500/30 backdrop-blur-md">
+              <i class="fa-brands fa-aws text-amber-400 text-xl flex-shrink-0"></i>
+              <div class="min-w-0">
+                <div class="text-[10px] uppercase font-mono font-bold text-amber-400 truncate">AWS Community</div>
+                <div class="text-xs font-bold text-white truncate">Student Builder Leader</div>
+              </div>
+            </div>
+            <div class="mobile-badge-card flex items-center gap-3 p-3 rounded-xl bg-slate-900/80 border border-yellow-500/30 backdrop-blur-md">
+              <i class="fa-solid fa-crown text-yellow-400 text-lg flex-shrink-0"></i>
+              <div class="min-w-0">
+                <div class="text-[10px] uppercase font-mono font-bold text-yellow-400 truncate">President</div>
+                <div class="text-xs font-bold text-white truncate">AWS Club @ Nusa Putra</div>
+              </div>
+            </div>
+            <div class="mobile-badge-card flex items-center gap-3 p-3 rounded-xl bg-slate-900/80 border border-cyan-500/30 backdrop-blur-md">
+              <i class="fa-solid fa-globe text-cyan-400 text-lg flex-shrink-0"></i>
+              <div class="min-w-0">
+                <div class="text-[10px] uppercase font-mono font-bold text-cyan-400 truncate">Global Ambassador</div>
+                <div class="text-xs font-bold text-white truncate">One World Youth Movements</div>
+              </div>
+            </div>
+            <div class="mobile-badge-card flex items-center gap-3 p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30 backdrop-blur-md">
+              <i class="fa-solid fa-handshake-angle text-emerald-400 text-lg flex-shrink-0"></i>
+              <div class="min-w-0">
+                <div class="text-[10px] uppercase font-mono font-bold text-emerald-400 truncate">Ambassador</div>
+                <div class="text-xs font-bold text-white truncate">International Diplomats</div>
+              </div>
+            </div>
+            <div class="mobile-badge-card flex items-center gap-3 p-3 rounded-xl bg-slate-900/80 border border-rose-500/30 backdrop-blur-md sm:col-span-2">
+              <i class="fa-solid fa-bolt text-rose-400 text-lg flex-shrink-0"></i>
+              <div class="min-w-0">
+                <div class="text-[10px] uppercase font-mono font-bold text-rose-400 truncate">Founder &amp; Designer</div>
+                <div class="text-xs font-bold text-white truncate">InkBit Digital Studio</div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -450,11 +489,25 @@
             </div>
           </div>
 
+          <!-- Terminal Quick Command Chips for Mobile & Fast Navigation -->
+          <div class="terminal-quick-chips px-4 py-2.5 bg-slate-950 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto">
+            <span class="text-[11px] font-mono text-slate-500 whitespace-nowrap flex items-center gap-1">
+              <i class="fa-solid fa-bolt text-cyan-400"></i> Tap:
+            </span>
+            <button type="button" class="term-chip" data-cmd="help">help</button>
+            <button type="button" class="term-chip" data-cmd="about">about</button>
+            <button type="button" class="term-chip" data-cmd="skills">skills</button>
+            <button type="button" class="term-chip" data-cmd="projects">projects</button>
+            <button type="button" class="term-chip" data-cmd="leadership">leadership</button>
+            <button type="button" class="term-chip" data-cmd="hire">hire</button>
+            <button type="button" class="term-chip" data-cmd="clear">clear</button>
+          </div>
+
           <!-- Terminal Input Row -->
-          <div class="terminal-input-bar px-6 py-4 bg-slate-950/80 border-t border-slate-800 flex items-center gap-3">
+          <div class="terminal-input-bar px-4 sm:px-6 py-3 sm:py-4 bg-slate-950/80 border-t border-slate-800 flex items-center gap-3">
             <span class="text-neon-cyan font-mono font-bold">&gt;</span>
             <input type="text" id="terminal-input" class="w-full bg-transparent font-mono text-white text-sm focus:outline-none placeholder-slate-600" placeholder="Type a command (e.g. help, skills, contact)..." autocomplete="off" spellcheck="false">
-            <button id="terminal-exec-btn" class="text-xs font-mono px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 transition">RUN</button>
+            <button id="terminal-exec-btn" class="text-xs font-mono px-3.5 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 font-bold transition">RUN</button>
           </div>
 
         </div>
@@ -1366,14 +1419,19 @@
 
           </div>
 
-          <!-- Contact Form (Right) with Express POST Handler -->
-          <div class="lg:col-span-7 glass-panel p-8 sm:p-10 relative">
+          <!-- Contact Form (Right) with Express POST & Telegram Handler -->
+          <div class="lg:col-span-7 glass-panel p-5 sm:p-8 md:p-10 relative">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 mb-4">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <i class="fa-brands fa-telegram text-sky-400"></i>
+              <span>Direct to Telegram &amp; Express Database</span>
+            </div>
             <h3 class="text-2xl font-bold text-white mb-2">Send an Instant Message</h3>
-            <p class="text-slate-400 text-sm mb-8">Leave your details and message below. You will receive immediate visual confirmation.</p>
+            <p class="text-slate-400 text-sm mb-6 sm:mb-8">Leave your details and message below. You will receive immediate visual confirmation.</p>
 
-            <form id="contact-form" class="space-y-6">
+            <form id="contact-form" class="space-y-4 sm:space-y-6">
               
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div class="form-group">
                   <label for="form-name" class="form-label">Your Name <span class="text-rose-400">*</span></label>
                   <input type="text" id="form-name" name="name" required class="form-input" placeholder="e.g. John Doe">
@@ -1394,9 +1452,9 @@
                 <textarea id="form-message" name="message" rows="5" required class="form-input" placeholder="Tell me about your project, timeline, or inquiry..."></textarea>
               </div>
 
-              <button type="submit" id="submit-btn" class="btn-primary w-full py-4 text-base font-bold flex items-center justify-center gap-3">
-                <span id="btn-text">Transmit Message to Express API</span>
-                <i class="fa-solid fa-paper-plane text-sm"></i>
+              <button type="submit" id="submit-btn" class="btn-primary w-full py-3.5 sm:py-4 text-base font-bold flex items-center justify-center gap-3 group">
+                <span id="btn-text">Send Instant Message</span>
+                <i class="fa-solid fa-paper-plane text-sm group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform"></i>
               </button>
 
               <!-- Form Response Alert Box -->

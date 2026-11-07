@@ -633,6 +633,18 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     });
   }
 
+  // Quick Command Chips (Tap to execute on mobile & desktop)
+  const termChips = document.querySelectorAll('.term-chip');
+  termChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const cmd = chip.getAttribute('data-cmd');
+      if (cmd) {
+        if (termInput) termInput.value = '';
+        executeCommand(cmd);
+      }
+    });
+  });
+
   function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, 
       tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
@@ -657,7 +669,7 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
       };
 
       submitBtn.disabled = true;
-      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Transmitting to Express API...';
+      btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending Instant Message...';
       formAlert.className = 'hidden';
 
       try {
@@ -678,7 +690,7 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
           setTimeout(() => playTone(659.25, 'sine', 0.15, 0.15), 100);
           setTimeout(() => playTone(783.99, 'sine', 0.3, 0.15), 200);
 
-          showToast('Message received by Express backend! 🚀');
+          showToast('Message sent! Dispatched to Telegram & Inbox 🚀');
         } else {
           formAlert.className = 'mt-4 p-4 rounded-xl text-sm font-mono bg-rose-500/10 border border-rose-500/30 text-rose-300 block';
           formAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${result.error || 'Failed to submit.'}`;
@@ -689,7 +701,7 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
         formAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> Connection error. Please contact directly at atheeb1311@gmail.com`;
       } finally {
         submitBtn.disabled = false;
-        btnText.textContent = 'Transmit Message to Express API';
+        btnText.textContent = 'Send Instant Message';
       }
     });
   }
