@@ -406,6 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const terminalCommands = {
     help: () => `Available Terminal Commands:
+  • welcome      : Opens interactive welcome greeting dialog
   • about        : Summary biography & university status
   • leadership   : AWS Builder & Global Ambassador leadership roles
   • skills       : Core technical skills breakdown
@@ -420,6 +421,13 @@ document.addEventListener('DOMContentLoaded', () => {
   • clear        : Clears console screen
   • whoami       : Current user session identification
   • date         : Server timestamp and date`,
+
+    welcome: () => {
+      openWelcomeModal();
+      return '[GREETING] Opening Mubarak Atheeb welcome dialog...';
+    },
+    hello: () => terminalCommands.welcome(),
+    hi: () => terminalCommands.welcome(),
 
     about: () => `MUBARAK ATHEEB
 First-year Informatics Engineering student at Universitas Nusa Putra (Student ID: 20250040223).
@@ -1026,9 +1034,75 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
 
   if (closeMatrixBtn) closeMatrixBtn.addEventListener('click', stopMatrixRain);
 
+  // ================= 13B. INTERACTIVE WELCOME GREETING ON SITE OPEN =================
+  const welcomeModal = document.getElementById('welcome-modal');
+  const closeWelcomeBtn = document.getElementById('close-welcome-btn');
+  const enterPortfolioBtn = document.getElementById('enter-portfolio-btn');
+  const welcomeVoiceBtn = document.getElementById('welcome-voice-btn');
+
+  function openWelcomeModal() {
+    if (!welcomeModal) return;
+    welcomeModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      welcomeModal.classList.add('active');
+    });
+
+    // Play subtle futuristic cyber audio chime
+    playTone(523.25, 'sine', 0.12, 0.12);
+    setTimeout(() => playTone(659.25, 'sine', 0.15, 0.12), 120);
+    setTimeout(() => playTone(783.99, 'sine', 0.25, 0.15), 240);
+  }
+
+  function closeWelcomeModal(showGreetingToast = true) {
+    if (!welcomeModal) return;
+    welcomeModal.classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      welcomeModal.classList.add('hidden');
+    }, 350);
+
+    if (showGreetingToast) {
+      showToast('Welcome to Mubarak Atheeb\'s portfolio! Enjoy exploring 🚀');
+    }
+  }
+
+  if (closeWelcomeBtn) {
+    closeWelcomeBtn.addEventListener('click', () => closeWelcomeModal(true));
+  }
+
+  if (enterPortfolioBtn) {
+    enterPortfolioBtn.addEventListener('click', () => {
+      playTone(880, 'sine', 0.1, 0.1);
+      closeWelcomeModal(true);
+    });
+  }
+
+  if (welcomeVoiceBtn) {
+    welcomeVoiceBtn.addEventListener('click', () => {
+      closeWelcomeModal(false);
+      startVoiceIntro();
+      showToast('Playing voice introduction by Mubarak Atheeb 🎙️');
+    });
+  }
+
+  if (welcomeModal) {
+    welcomeModal.addEventListener('click', (e) => {
+      if (e.target === welcomeModal) {
+        closeWelcomeModal(true);
+      }
+    });
+  }
+
+  // Trigger welcome modal on site open (with a smooth 500ms delay for 3D load)
+  setTimeout(() => {
+    openWelcomeModal();
+  }, 500);
+
   // Global ESC handler to close any active modal
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      closeWelcomeModal(true);
       closeResumeModal();
       closeProjectModal();
       stopMatrixRain();

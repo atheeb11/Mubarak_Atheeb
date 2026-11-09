@@ -1714,6 +1714,38 @@ body {
   }
 }
 
+/* ================= INTERACTIVE WELCOME MODAL STYLES ================= */
+#welcome-modal {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+}
+
+#welcome-modal.active {
+  display: flex !important;
+  opacity: 1;
+}
+
+#welcome-modal.active .welcome-modal-card {
+  transform: scale(1);
+}
+
+.welcome-modal-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.9),
+              0 0 50px -5px rgba(0, 242, 254, 0.35);
+}
+
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  20%, 60% { transform: rotate(14deg); }
+  40%, 80% { transform: rotate(-10deg); }
+}
+
+.animate-wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: waveHand 2s infinite ease-in-out;
+}
+
 /* ================= PRINT STYLESHEET (CLEAN RESUME EXPORT) ================= */
 @media print {
   body {
@@ -1730,6 +1762,7 @@ body {
   #whatsapp-float,
   #matrix-modal,
   #project-modal,
+  #welcome-modal,
   main {
     display: none !important;
   }
