@@ -64,7 +64,7 @@
 
   <!-- Audio Control & Theme Floaters -->
   <div class="quick-controls fixed top-24 right-6 z-50 flex flex-col gap-3">
-    <button id="voiceover-toggle-btn" class="control-btn voice-control-btn" title="Listen to Voice Introduction by Mubarak" aria-label="Play Voice Intro">
+    <button id="voiceover-toggle-btn" class="control-btn voice-control-btn" title="Voice Introduction (Auto-plays automatically)" aria-label="Voice Intro">
       <i class="fa-solid fa-microphone-lines text-cyan-400"></i>
       <span class="btn-tooltip">Voice Intro</span>
     </button>
@@ -1557,16 +1557,22 @@
         </span>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex flex-col sm:flex-row items-center gap-3 mt-6">
-        <button id="enter-portfolio-btn" class="btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25">
-          <span>Explore 3D Portfolio</span>
-          <i class="fa-solid fa-arrow-right-long text-xs"></i>
-        </button>
+      <!-- Automatic Voice Introduction Status Bar -->
+      <div id="welcome-voice-status" class="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs my-4 shadow-[0_0_15px_rgba(0,242,254,0.15)]">
+        <div class="audio-equalizer flex items-end gap-1 h-3.5">
+          <span class="eq-bar bar-1"></span>
+          <span class="eq-bar bar-2"></span>
+          <span class="eq-bar bar-3"></span>
+          <span class="eq-bar bar-4"></span>
+        </div>
+        <span id="welcome-voice-text">Voice Introduction Speaking Automatically...</span>
+      </div>
 
-        <button id="welcome-voice-btn" class="btn-secondary w-full py-3.5 text-sm font-semibold flex items-center justify-center gap-2">
-          <i class="fa-solid fa-microphone-lines text-cyan-400"></i>
-          <span>Play Voice Intro</span>
+      <!-- Action Button -->
+      <div class="mt-5">
+        <button id="enter-portfolio-btn" class="btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/25">
+          <span>Enter 3D Portfolio</span>
+          <i class="fa-solid fa-arrow-right-long text-xs"></i>
         </button>
       </div>
 
@@ -1846,8 +1852,8 @@
   <!-- Toast Notification Container -->
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
-  <!-- Audio Element for Seamless Voiceover Playback -->
-  <audio id="profile-audio" src="/audio/intro.wav" preload="auto" playsinline></audio>
+  <!-- Audio Element for Seamless Voiceover Playback (Autoplays on page load) -->
+  <audio id="profile-audio" src="/audio/intro.wav" preload="auto" autoplay playsinline></audio>
 
   <!-- Scripts -->
   <script src="/js/three-scene.js"></script>

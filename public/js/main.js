@@ -1048,6 +1048,11 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
       welcomeModal.classList.add('active');
     });
 
+    // Automatically trigger voice intro right when the welcome message opens!
+    if (!hasStartedVoice) {
+      startVoiceIntro().catch(() => {});
+    }
+
     // Play subtle futuristic cyber audio chime
     playTone(523.25, 'sine', 0.12, 0.12);
     setTimeout(() => playTone(659.25, 'sine', 0.15, 0.12), 120);
@@ -1068,28 +1073,25 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
   }
 
   if (closeWelcomeBtn) {
-    closeWelcomeBtn.addEventListener('click', () => closeWelcomeModal(true));
+    closeWelcomeBtn.addEventListener('click', () => {
+      if (!hasStartedVoice) startVoiceIntro().catch(() => {});
+      closeWelcomeModal(false);
+    });
   }
 
   if (enterPortfolioBtn) {
     enterPortfolioBtn.addEventListener('click', () => {
+      if (!hasStartedVoice) startVoiceIntro().catch(() => {});
       playTone(880, 'sine', 0.1, 0.1);
-      closeWelcomeModal(true);
-    });
-  }
-
-  if (welcomeVoiceBtn) {
-    welcomeVoiceBtn.addEventListener('click', () => {
       closeWelcomeModal(false);
-      startVoiceIntro();
-      showToast('Playing voice introduction by Mubarak Atheeb 🎙️');
     });
   }
 
   if (welcomeModal) {
     welcomeModal.addEventListener('click', (e) => {
+      if (!hasStartedVoice) startVoiceIntro().catch(() => {});
       if (e.target === welcomeModal) {
-        closeWelcomeModal(true);
+        closeWelcomeModal(false);
       }
     });
   }
@@ -1124,10 +1126,22 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     if (voiceToggleBtn) {
       if (speaking) {
         voiceToggleBtn.classList.add('speaking');
-        voiceToggleBtn.title = 'Pause Voice Introduction';
+        voiceToggleBtn.title = 'Mubarak is speaking (Click to pause)';
       } else {
         voiceToggleBtn.classList.remove('speaking');
-        voiceToggleBtn.title = 'Play Voice Introduction';
+        voiceToggleBtn.title = 'Voice Introduction (Auto-plays automatically)';
+      }
+    }
+
+    const welcomeVoiceText = document.getElementById('welcome-voice-text');
+    const welcomeEq = document.querySelector('#welcome-voice-status .audio-equalizer');
+    if (welcomeVoiceText) {
+      if (speaking) {
+        welcomeVoiceText.textContent = "Mubarak's Voice Introduction Speaking Automatically...";
+        if (welcomeEq) welcomeEq.classList.remove('paused');
+      } else {
+        welcomeVoiceText.textContent = "Voice Introduction Finished";
+        if (welcomeEq) welcomeEq.classList.add('paused');
       }
     }
   }
@@ -1255,7 +1269,7 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
   }
 
   // Dual-tier Autoplay Engine:
-  // Tier 1: Try immediately on open / refresh
+  // Tier 1: Try immediately on open / refresh without waiting
   function attemptAutoPlay() {
     if (hasStartedVoice) return;
     startVoiceIntro().then(started => {
@@ -1266,16 +1280,23 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     }).catch(() => {});
   }
 
-  // Tier 2: Instant trigger on first user activation if browser requires gesture
-  const userActivationEvents = ['pointerdown', 'click', 'touchstart', 'keydown'];
+  // Tier 2: Immediate trigger on ANY user interaction if browser enforces policy
+  const userActivationEvents = [
+    'pointerdown', 'mousedown', 'touchstart', 'touchend', 'click',
+    'keydown', 'wheel', 'scroll', 'pointermove', 'mousemove'
+  ];
+
   function onFirstUserActivation() {
+    if (audioContext && audioContext.state === 'suspended') {
+      audioContext.resume().catch(() => {});
+    }
     if (!hasStartedVoice) {
       startVoiceIntro().then(started => {
         if (started) {
           hasStartedVoice = true;
           detachGestureListeners();
         }
-      });
+      }).catch(() => {});
     } else {
       detachGestureListeners();
     }
@@ -1295,10 +1316,13 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
 
   // Attempt right away at multiple stages of document readiness
   attemptAutoPlay();
+  setTimeout(attemptAutoPlay, 100);
+  setTimeout(attemptAutoPlay, 300);
+  setTimeout(attemptAutoPlay, 600);
   if (document.readyState === 'complete') {
-    setTimeout(attemptAutoPlay, 200);
+    setTimeout(attemptAutoPlay, 150);
   } else {
-    window.addEventListener('load', () => setTimeout(attemptAutoPlay, 200));
+    window.addEventListener('load', () => setTimeout(attemptAutoPlay, 150));
   }
 
 });
