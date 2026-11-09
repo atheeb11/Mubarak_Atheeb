@@ -85,6 +85,17 @@ This repository houses the personal portfolio, engineering platform, and digital
 ### 📄 8. Printable Curriculum Vitae Modal
 - Formatted CV view with print stylesheet (`@media print`), enabling instant PDF generation and printing from any browser.
 
+### ✨ 9. Interactive Holographic Welcome Dialog
+- Automated entrance greeting dialog popping up 500ms after load with cyber audio chime.
+- Features Mubarak's glowing avatar, bio summary, leadership highlights, 1-click voice intro player, and direct contact buttons.
+- Re-openable anytime via the terminal command `welcome` or tapping the quick-chip.
+
+### 📱 10. 100% Mobile & Touch UX Optimization
+- **Mobile Leadership Grid**: Showcases all 5 leadership credentials in responsive glassmorphic cards on mobile.
+- **Touch-Friendly Controls**: 1-tap quick command pills for the terminal, horizontal momentum scrolling filter bars, and ergonomic tap targets.
+- **3D Touch Parallax**: Real-time thumb drag interaction on the Three.js WebGL canvas.
+- **iOS Safari Safeguards**: Strict 16px input font sizes preventing viewport zoom issues.
+
 ---
 
 ## 🛠️ Tech Stack
