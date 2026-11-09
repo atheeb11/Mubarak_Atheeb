@@ -406,7 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const terminalCommands = {
     help: () => `Available Terminal Commands:
-  • welcome      : Opens interactive welcome greeting dialog
   • about        : Summary biography & university status
   • leadership   : AWS Builder & Global Ambassador leadership roles
   • skills       : Core technical skills breakdown
@@ -415,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
   • education    : Academic qualifications & scholarship
   • certs        : Professional diplomas (AI, ML, Data)
   • cv / resume  : Opens Curriculum Vitae modal & print view
+  • voice        : Plays Mubarak's personal voice introduction
   • contact      : Reach out via email, phone or GitHub
   • hire         : Opens the contact transmission form
   • matrix       : Fullscreen digital rain stream
@@ -422,12 +422,8 @@ document.addEventListener('DOMContentLoaded', () => {
   • whoami       : Current user session identification
   • date         : Server timestamp and date`,
 
-    welcome: () => {
-      openWelcomeModal();
-      return '[GREETING] Opening Mubarak Atheeb welcome dialog...';
-    },
-    hello: () => terminalCommands.welcome(),
-    hi: () => terminalCommands.welcome(),
+    hello: () => `Hello! Welcome to Mubarak Atheeb's portfolio. Type 'help' to explore commands.`,
+    hi: () => `Hi there! Welcome to Mubarak Atheeb's portfolio. Type 'help' to explore commands.`,
 
     about: () => `MUBARAK ATHEEB
 First-year Informatics Engineering student at Universitas Nusa Putra (Student ID: 20250040223).
@@ -1034,77 +1030,9 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
 
   if (closeMatrixBtn) closeMatrixBtn.addEventListener('click', stopMatrixRain);
 
-  // ================= 13B. INTERACTIVE WELCOME GREETING ON SITE OPEN =================
-  const welcomeModal = document.getElementById('welcome-modal');
-  const closeWelcomeBtn = document.getElementById('close-welcome-btn');
-  const enterPortfolioBtn = document.getElementById('enter-portfolio-btn');
-  const welcomeVoiceBtn = document.getElementById('welcome-voice-btn');
-
-  function openWelcomeModal() {
-    if (!welcomeModal) return;
-    welcomeModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => {
-      welcomeModal.classList.add('active');
-    });
-
-    // Automatically trigger voice intro right when the welcome message opens!
-    if (!hasStartedVoice) {
-      startVoiceIntro().catch(() => {});
-    }
-
-    // Play subtle futuristic cyber audio chime
-    playTone(523.25, 'sine', 0.12, 0.12);
-    setTimeout(() => playTone(659.25, 'sine', 0.15, 0.12), 120);
-    setTimeout(() => playTone(783.99, 'sine', 0.25, 0.15), 240);
-  }
-
-  function closeWelcomeModal(showGreetingToast = true) {
-    if (!welcomeModal) return;
-    welcomeModal.classList.remove('active');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-      welcomeModal.classList.add('hidden');
-    }, 350);
-
-    if (showGreetingToast) {
-      showToast('Welcome to Mubarak Atheeb\'s portfolio! Enjoy exploring 🚀');
-    }
-  }
-
-  if (closeWelcomeBtn) {
-    closeWelcomeBtn.addEventListener('click', () => {
-      if (!hasStartedVoice) startVoiceIntro().catch(() => {});
-      closeWelcomeModal(false);
-    });
-  }
-
-  if (enterPortfolioBtn) {
-    enterPortfolioBtn.addEventListener('click', () => {
-      if (!hasStartedVoice) startVoiceIntro().catch(() => {});
-      playTone(880, 'sine', 0.1, 0.1);
-      closeWelcomeModal(false);
-    });
-  }
-
-  if (welcomeModal) {
-    welcomeModal.addEventListener('click', (e) => {
-      if (!hasStartedVoice) startVoiceIntro().catch(() => {});
-      if (e.target === welcomeModal) {
-        closeWelcomeModal(false);
-      }
-    });
-  }
-
-  // Trigger welcome modal on site open (with a smooth 500ms delay for 3D load)
-  setTimeout(() => {
-    openWelcomeModal();
-  }, 500);
-
   // Global ESC handler to close any active modal
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      closeWelcomeModal(true);
       closeResumeModal();
       closeProjectModal();
       stopMatrixRain();
@@ -1132,18 +1060,6 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
         voiceToggleBtn.title = 'Voice Introduction (Auto-plays automatically)';
       }
     }
-
-    const welcomeVoiceText = document.getElementById('welcome-voice-text');
-    const welcomeEq = document.querySelector('#welcome-voice-status .audio-equalizer');
-    if (welcomeVoiceText) {
-      if (speaking) {
-        welcomeVoiceText.textContent = "Mubarak's Voice Introduction Speaking Automatically...";
-        if (welcomeEq) welcomeEq.classList.remove('paused');
-      } else {
-        welcomeVoiceText.textContent = "Voice Introduction Finished";
-        if (welcomeEq) welcomeEq.classList.add('paused');
-      }
-    }
   }
 
   function getBestEnglishVoice() {
@@ -1156,29 +1072,20 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
     return preferred || voices.find(v => v.lang.startsWith('en')) || voices[0];
   }
 
-  async function startVoiceIntro(forceRestart = false) {
-    if (isSpeaking && !forceRestart) return true;
-
-    stopVoiceIntro(false);
-
-    // 1. Try HTML5 Audio First (Fastest, highest fidelity, fully cross-platform)
-    if (profileAudio) {
-      try {
-        profileAudio.currentTime = 0;
-        const playPromise = profileAudio.play();
-        if (playPromise !== undefined) {
-          await playPromise;
-          hasStartedVoice = true;
-          updateVoiceUI(true);
-          return true;
-        }
-      } catch (audioErr) {
-        // Fall back to Web Speech API
-      }
+  function playHtml5Audio() {
+    if (!profileAudio) return Promise.reject(new Error('No audio element'));
+    profileAudio.volume = 1.0;
+    profileAudio.muted = false;
+    const playPromise = profileAudio.play();
+    if (playPromise !== undefined) {
+      return playPromise;
     }
+    return Promise.resolve();
+  }
 
-    // 2. Fallback to Browser Speech Synthesis API
-    if ('speechSynthesis' in window) {
+  function playSpeechSynthesis() {
+    if (!('speechSynthesis' in window)) return Promise.reject(new Error('No speech synthesis'));
+    return new Promise((resolve, reject) => {
       try {
         window.speechSynthesis.cancel();
         window.speechSynthesis.resume();
@@ -1192,15 +1099,16 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
         currentUtterance.onstart = () => {
           hasStartedVoice = true;
           updateVoiceUI(true);
-          // Keep-alive timer for Chrome speech synthesis 15-second pause bug
+          detachGestureListeners();
           clearInterval(speechKeepAliveTimer);
           speechKeepAliveTimer = setInterval(() => {
-            if (isSpeaking && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
+            if (isSpeaking && window.speechSynthesis && window.speechSynthesis.speaking) {
               window.speechSynthesis.resume();
             } else {
               clearInterval(speechKeepAliveTimer);
             }
           }, 300);
+          resolve();
         };
 
         currentUtterance.onend = () => {
@@ -1208,20 +1116,37 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
           updateVoiceUI(false);
         };
 
-        currentUtterance.onerror = () => {
+        currentUtterance.onerror = (e) => {
           clearInterval(speechKeepAliveTimer);
           updateVoiceUI(false);
+          reject(e);
         };
 
         window.speechSynthesis.speak(currentUtterance);
         window.speechSynthesis.resume();
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  async function startVoiceIntro(forceRestart = false) {
+    if (isSpeaking && !forceRestart) return true;
+    stopVoiceIntro(false);
+
+    // 1. Try HTML5 Audio First (native intro.wav recording)
+    try {
+      await playHtml5Audio();
+      return true;
+    } catch (audioErr) {
+      // 2. Audio element blocked; attempt speech synthesis fallback
+      try {
+        await playSpeechSynthesis();
         return true;
       } catch (ttsErr) {
-        // TTS failed
+        return false;
       }
     }
-
-    return false;
   }
 
   function stopVoiceIntro(notify = false) {
@@ -1252,54 +1177,45 @@ Origin: Sri Lanka | Current Base: Sukabumi, Indonesia`,
   }
 
   if (profileAudio) {
+    profileAudio.addEventListener('playing', () => {
+      hasStartedVoice = true;
+      updateVoiceUI(true);
+      detachGestureListeners();
+    });
     profileAudio.addEventListener('ended', () => updateVoiceUI(false));
     profileAudio.addEventListener('pause', () => {
       if (!window.speechSynthesis?.speaking) updateVoiceUI(false);
     });
   }
 
-  // Pre-load voices for Chrome / Chromium
+  // Pre-load voices for Chrome
   if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = () => {
       getBestEnglishVoice();
-      if (!hasStartedVoice) {
-        attemptAutoPlay();
-      }
     };
   }
 
   // Dual-tier Autoplay Engine:
-  // Tier 1: Try immediately on open / refresh without waiting
+  // Tier 1: Try immediately upon script execution & page load
   function attemptAutoPlay() {
     if (hasStartedVoice) return;
-    startVoiceIntro().then(started => {
-      if (started) {
-        hasStartedVoice = true;
-        detachGestureListeners();
-      }
-    }).catch(() => {});
+    startVoiceIntro(false).catch(() => {});
   }
 
-  // Tier 2: Immediate trigger on ANY user interaction if browser enforces policy
+  // Tier 2: Instant trigger on legitimate user activation (click, touch, key, scroll)
   const userActivationEvents = [
-    'pointerdown', 'mousedown', 'touchstart', 'touchend', 'click',
-    'keydown', 'wheel', 'scroll', 'pointermove', 'mousemove'
+    'click', 'pointerdown', 'touchstart', 'touchend', 'keydown', 'wheel', 'scroll'
   ];
 
   function onFirstUserActivation() {
+    if (hasStartedVoice) {
+      detachGestureListeners();
+      return;
+    }
     if (audioContext && audioContext.state === 'suspended') {
       audioContext.resume().catch(() => {});
     }
-    if (!hasStartedVoice) {
-      startVoiceIntro().then(started => {
-        if (started) {
-          hasStartedVoice = true;
-          detachGestureListeners();
-        }
-      }).catch(() => {});
-    } else {
-      detachGestureListeners();
-    }
+    startVoiceIntro(false).catch(() => {});
   }
 
   function detachGestureListeners() {
